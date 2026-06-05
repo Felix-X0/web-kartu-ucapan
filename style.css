@@ -1,4 +1,4 @@
-/* style.css v4.0 - Cyber Luxury & Ultra Smooth Layout */
+/* style.css v5.0 - Atelier Luxury Multi-View Setup */
 * {
     margin: 0;
     padding: 0;
@@ -7,59 +7,156 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #090d16; /* Background luar dirubah jadi gelap mewah ala Spotify/Netflix */
+    background-color: #070a12; /* Background gelap solid super premium */
     color: #f3f4f6;
-    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-    padding: 2rem 0;
+    overflow-x: hidden;
 }
 
+/* Utilitas untuk menyembunyikan halaman */
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   STYLE HALAMAN 1: LANDING PAGE (SANGAT ELEGAN & SINEMATIK)
+   ========================================================================== */
+#landingScreen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    background: radial-gradient(circle at center, #111827 0%, #070a12 100%);
+    position: relative;
+}
+
+#landingScreen::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(56, 189, 248, 0.08);
+    filter: blur(80px);
+    border-radius: 50%;
+    top: 20%;
+}
+
+.hero-container {
+    max-width: 650px;
+    position: relative;
+    z-index: 2;
+    animation: fadeIn 1s ease-out;
+}
+
+.hero-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 2rem;
+}
+
+.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.2rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+}
+
+.hero-subtitle {
+    color: #94a3b8;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    padding: 0 1rem;
+}
+
+.cta-button {
+    background: #ffffff;
+    color: #070a12;
+    border: none;
+    padding: 1.2rem 2.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 40px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    background-color: #f3f4f6;
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.15);
+}
+
+/* ==========================================================================
+   STYLE HALAMAN 2: APP STUDIO (EDITOR CARD)
+   ========================================================================== */
 .container {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 2rem 1.5rem;
+    padding: 1.5rem 1.5rem 3rem 1.5rem;
 }
 
-header {
-    text-align: center;
-    margin-bottom: 3.5rem;
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 1rem;
 }
 
-header h1 {
-    font-family: 'Cinzel', serif;
-    font-size: 2.6rem;
-    font-weight: 700;
-    letter-spacing: 6px;
-    background: linear-gradient(to right, #fff, #94a3b8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-transform: uppercase;
-    margin-bottom: 0.8rem;
-}
-
-header p {
+.back-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     color: #94a3b8;
-    font-size: 0.95rem;
-    font-weight: 300;
-    letter-spacing: 1px;
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
-/* Layout Grid Utama yang Seimbang */
+.back-btn:hover {
+    color: #fff;
+    border-color: #fff;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.app-branding {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
 .app-grid {
     display: grid;
     grid-template-columns: 1fr 1.1fr;
     gap: 3rem;
     align-items: start;
+    animation: fadeIn 0.6s ease-out;
 }
 
-/* Panel Kontrol Kiri - Dibuat Transparan Gelap Kekinian */
 .controls-panel {
-    background: rgba(17, 24, 39, 0.7);
+    background: rgba(15, 23, 42, 0.4);
     backdrop-filter: blur(12px);
     padding: 2.5rem;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .form-group {
@@ -79,23 +176,21 @@ header p {
 input[type="text"], textarea, select {
     width: 100%;
     padding: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.9rem;
-    background-color: rgba(15, 23, 42, 0.6);
+    background-color: rgba(7, 10, 18, 0.5);
     color: #fff;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s;
 }
 
 input[type="text"]:focus, textarea:focus, select:focus {
     border-color: #38bdf8;
-    background-color: #0f172a;
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
     outline: none;
 }
 
-/* Pilihan Tema Kapsul Estetik */
 .theme-selector {
     display: flex;
     gap: 0.5rem;
@@ -103,26 +198,24 @@ input[type="text"]:focus, textarea:focus, select:focus {
 }
 
 .theme-btn {
-    padding: 0.6rem 1.1rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.03);
+    padding: 0.55rem 1.1rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.02);
     color: #cbd5e1;
     border-radius: 30px;
     cursor: pointer;
     font-size: 0.75rem;
     font-weight: 500;
-    transition: all 0.2s ease;
+    transition: all 0.2s;
 }
 
 .theme-btn:hover, .theme-btn.active {
     background-color: #fff;
-    color: #090d16;
+    color: #070a12;
     border-color: #fff;
     font-weight: 600;
-    transform: scale(1.03);
 }
 
-/* Tombol Aksi Bawah */
 .button-group {
     display: flex;
     gap: 1rem;
@@ -139,48 +232,44 @@ input[type="text"]:focus, textarea:focus, select:focus {
     text-transform: uppercase;
     letter-spacing: 2px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s;
 }
 
 .download-btn {
     background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
     color: white;
-    box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2);
 }
-.download-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(56, 189, 248, 0.3); }
+.download-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(56, 189, 248, 0.25); }
 
 .share-btn {
     background-color: transparent;
     color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
-...share-btn:hover {
+.share-btn:hover {
     background-color: rgba(255, 255, 255, 0.05);
     border-color: #fff;
-    transform: translateY(-2px);
 }
 
-/* Panel Kanan (Preview Kartu) */
+/* Preview Area */
 .preview-panel {
     display: flex;
     justify-content: center;
     position: sticky;
-    top: 2.5rem;
+    top: 2rem;
 }
 
-/* Kanvas Kartu Fisik Premium (Tanpa Menggunakan Variabel CSS Internal untuk Menghindari Glitch Download) */
 .card-canvas {
     width: 100%;
-    max-width: 430px;
+    max-width: 420px;
     aspect-ratio: 4/5;
-    border-radius: 20px;
+    border-radius: 24px;
     padding: 3.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
 }
 
 .card-canvas::before {
@@ -207,7 +296,7 @@ input[type="text"]:focus, textarea:focus, select:focus {
 }
 
 .card-message {
-    font-size: 1.6rem;
+    font-size: 1.55rem;
     line-height: 1.6;
     margin: 2.5rem 0;
     font-weight: 400;
@@ -215,57 +304,52 @@ input[type="text"]:focus, textarea:focus, select:focus {
 }
 
 /* ==========================================================================
-   10 KUMPULAN TEMA EKSKLUSIF (Eksplisit kodenya tanpa variabel agar html2canvas lancar)
+   10 TEMA DAN MOTIF PREMIUM (Eksplisit tanpa CSS variables agar anti-glitch)
    ========================================================================== */
-
-/* Tema 1: Midnight Gold */
 .card-canvas.theme-1 { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #ffffff; border: 1px solid #334155; }
 .theme-1 .card-to span, .theme-1 .card-from span { color: #dfba6b; }
 
-/* Tema 2: Blush Rose */
 .card-canvas.theme-2 { background: linear-gradient(135deg, #fbcfe8 0%, #f3e8ff 100%); color: #4a3728; }
 .theme-2 .card-to span, .theme-2 .card-from span { color: #c94a6a; }
 
-/* Tema 3: Emerald Sage */
 .card-canvas.theme-3 { background: linear-gradient(135deg, #064e3b 0%, #047857 100%); color: #f8fafc; }
 .theme-3 .card-to span, .theme-3 .card-from span { color: #fde047; }
 
-/* Tema 4: Ivory Luxury */
 .card-canvas.theme-4 { background: #fdfbf7; color: #2c3e50; border: 1px solid #ebd9c8; }
 .theme-4 .card-to span, .theme-4 .card-from span { color: #7c3aed; }
 
-/* Tema 5: Neon Cyber */
-.card-canvas.theme-5 { background: #020617; color: #ffffff; border: 2px solid #d946ef; box-shadow: 0 0 30px rgba(217, 70, 239, 0.2); }
+.card-canvas.theme-5 { background: #020617; color: #ffffff; border: 2px solid #d946ef; }
 .theme-5 .card-to span, .theme-5 .card-from span { color: #22d3ee; text-shadow: 0 0 8px rgba(34, 211, 238, 0.5); }
 
-/* Tema 6: Warm Sunset */
 .card-canvas.theme-6 { background: linear-gradient(135deg, #e11d48 0%, #f59e0b 100%); color: #ffffff; }
 .theme-6 .card-to span, .theme-6 .card-from span { color: #111111; }
 
-/* Tema 7: Nordic Wood */
 .card-canvas.theme-7 { background: linear-gradient(135deg, #2b1810 0%, #4a2c11 100%); color: #f5f5f4; border: 1px solid #5c3a21; }
 .theme-7 .card-to span, .theme-7 .card-from span { color: #f59e0b; }
 
-/* Tema 8: Amethyst Magic */
 .card-canvas.theme-8 { background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%); color: #ffffff; }
 .theme-8 .card-to span, .theme-8 .card-from span { color: #a7f3d0; }
 
-/* Tema 9: Polkadot Retro */
 .card-canvas.theme-9 { background-color: #faf8f5; color: #2b2b2b; background-image: radial-gradient(#dcd6cd 12%, transparent 13%); background-size: 24px 24px; border: 1px solid #e2dacd; }
 .theme-9 .card-to span, .theme-9 .card-from span { color: #ff6b6b; }
 
-/* Tema 10: Garis Seni */
 .card-canvas.theme-10 { background: repeating-linear-gradient(45deg, #111827, #111827 10px, #1f2937 10px, #1f2937 20px); color: #ffffff; border: 1px solid #374151; }
 .theme-10 .card-to span, .theme-10 .card-from span { color: #38bdf8; }
 
-/* Responsif Mobile Layout (Dioptimalkan agar tidak berantakan seperti IMG_3342.jpg) */
+/* Animasi Fade In */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Mobile Layout (Rapih, Tidak Padat Lagi) */
 @media (max-width: 768px) {
-    body { padding: 1rem 0; }
+    .hero-title { font-size: 2.2rem; }
+    .hero-subtitle { font-size: 0.9rem; }
     .container { padding: 1rem; }
-    header h1 { font-size: 2rem; letter-spacing: 4px; }
     .app-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .controls-panel { padding: 1.5rem; border-radius: 12px; }
+    .controls-panel { padding: 1.5rem; border-radius: 16px; }
     .preview-panel { position: relative; top: 0; }
-    .card-canvas { padding: 2rem; border-radius: 12px; }
-    .card-message { font-size: 1.3rem; margin: 1.8rem 0; }
+    .card-canvas { padding: 2.5rem; border-radius: 16px; }
+    .card-message { font-size: 1.25rem; }
 }
