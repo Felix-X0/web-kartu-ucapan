@@ -2,120 +2,107 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atelier Studio Premium | All-In-One</title>
-    <!-- GOOGLE VERIFICATION -->
-    <meta name="google-site-verification" content="eikd6Rzc695Y7uJtpPKJFB6zgb-V08adih6jovwYE6M" />
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Cinzel&family=Dancing+Script&family=Playfair+Display&family=Poppins:wght@300;400;600&family=Special+Elite&display=swap" rel="stylesheet">
-    
+    <title>Atelier AI Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        :root { --bg: #0a0a0a; --glass: rgba(255, 255, 255, 0.05); --accent: #c5a059; }
+        :root { --bg: #131314; --chat-bg: #1e1f20; --accent: #a8c7fa; }
+        body { background: var(--bg); color: #e3e3e3; font-family: 'Google Sans', sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .container { max-width: 600px; width: 100%; }
         
-        /* TEMA */
-        .theme-luxury { border: 2px solid #c5a059; color: #c5a059; background: #0a0a0a; }
-        .theme-cyber { border: 2px solid #00ffcc; color: #00ffcc; background: #050505; }
-        .theme-floral { border: 2px solid #ff80ab; color: #5d4037; background: #fff0f5; }
-        .theme-anime { border: 4px solid #000; color: #000; background: #fff; }
-        .theme-kartun { border: 3px solid #4a90e2; color: #2b2b2b; background: #ffe066; }
-
-        body { background: #000; color: #fff; display: flex; justify-content: center; padding: 20px; font-family: 'Poppins', sans-serif; }
-        .container { max-width: 450px; width: 100%; }
+        /* Chat Style */
+        .chat-bubble { background: var(--chat-bg); padding: 20px; border-radius: 20px; margin-bottom: 20px; max-width: 90%; }
+        .prompt-box { position: sticky; bottom: 20px; background: #282a2d; padding: 15px; border-radius: 30px; display: flex; flex-direction: column; gap: 10px; }
+        input, textarea, select { background: transparent; border: none; color: white; padding: 10px; width: 100%; outline: none; }
         
         /* Kartu */
-        .card { aspect-ratio: 4/5; border-radius: 20px; padding: 40px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.5s; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        #cardCanvas { width: 100%; aspect-ratio: 4/5; border-radius: 20px; padding: 30px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-bottom: 20px; transition: 0.5s; display: none; }
         
-        /* Editor */
-        .editor { background: var(--glass); backdrop-filter: blur(15px); padding: 25px; border-radius: 25px; margin-top: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        input, textarea, select { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid #444; padding: 12px; margin: 8px 0; border-radius: 12px; color: #fff; }
-        .btn { width: 100%; padding: 14px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
-        .btn-primary { background: #c5a059; color: #000; }
-        .btn-secondary { background: rgba(255,255,255,0.1); color: #fff; }
+        /* Tema */
+        .theme-luxury { border: 2px solid #c5a059; color: #c5a059; }
+        .theme-cyber { background: #050505; border: 2px solid #00ffcc; color: #00ffcc; }
+        .theme-anime { background: #fff; border: 2px solid #000; color: #000; }
+        
+        button { background: var(--accent); color: black; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div id="cardCanvas" class="card theme-luxury">
-        <p id="cardTo" style="font-size: 1.2em;">Untuk: Kak Shinta</p>
-        <h1 id="cardMsg" style="font-size: 2em; margin: 20px 0;">Selamat Ulang Tahun!</h1>
-        <p id="cardFrom" style="font-style: italic;">Dari: Adun</p>
+<div class="container" id="chat">
+    <div class="chat-bubble" id="ai-greeting">
+        Halo! Saya Atelier AI. Saya bisa bantu buatkan kartu ucapan digital yang keren untukmu. Siap untuk memulai?
+        <br><br><button onclick="startWizard()">Mulai Buat Kartu</button>
     </div>
-
-    <div class="editor">
-        <input type="text" id="toInput" placeholder="Penerima...">
-        <textarea id="msgInput" placeholder="Pesan..."></textarea>
-        <input type="text" id="fromInput" placeholder="Pengirim...">
-        
-        <select id="fontSelector">
-            <option value="'Playfair Display', serif">Luxury Gold</option>
-            <option value="'Cinzel', serif">Dark Fantasy</option>
-            <option value="'Dancing Script', cursive">Handwriting</option>
-            <option value="'Special Elite', cursive">Typewriter</option>
-            <option value="'Poppins', sans-serif">Modern Minimal</option>
-        </select>
-        
-        <select id="themeSelector">
-            <option value="theme-luxury">Luxury Gold</option>
-            <option value="theme-cyber">Cyber Neon</option>
-            <option value="theme-floral">Floral Soft</option>
-            <option value="theme-anime">Anime Bold</option>
-            <option value="theme-kartun">Cartoon Fun</option>
-        </select>
-
-        <button class="btn btn-primary" onclick="download4K()">DOWNLOAD 4K ULTRA</button>
-        <button class="btn btn-secondary" onclick="shareLink()">SALIN LINK KARTU</button>
-    </div>
-
-    <p style="text-align: center; margin-top: 20px; opacity: 0.6; font-size: 12px;">
-        <a href="https://sociabuzz.com/cadis77/tribe" style="color: #fff;">Dukung Kreator</a>
-    </p>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script>
-    const canvas = document.getElementById('cardCanvas');
-    const toIn = document.getElementById('toInput');
-    const msgIn = document.getElementById('msgInput');
-    const fromIn = document.getElementById('fromInput');
-    const fontSel = document.getElementById('fontSelector');
-    const themeSel = document.getElementById('themeSelector');
+<!-- Input Form (Hidden at start) -->
+<div class="container" id="editor" style="display:none;">
+    <div id="cardCanvas" class="theme-luxury">
+        <h2 id="cardTo">Untuk: ...</h2>
+        <p id="cardMsg" style="font-size: 1.5em; margin: 20px 0;">...</p>
+        <p id="cardFrom">Dari: ...</p>
+    </div>
 
-    function update() {
-        document.getElementById('cardTo').textContent = "Untuk: " + (toIn.value || "Kak Shinta");
-        document.getElementById('cardMsg').textContent = msgIn.value || "Selamat Ulang Tahun!";
-        document.getElementById('cardFrom').textContent = "Dari: " + (fromIn.value || "Adun");
-        document.getElementById('cardMsg').style.fontFamily = fontSel.value;
-        canvas.className = 'card ' + themeSel.value;
+    <div class="prompt-box">
+        <input type="text" id="toInput" placeholder="Untuk siapa?" oninput="update()">
+        <textarea id="msgInput" placeholder="Isi pesan..." oninput="update()"></textarea>
+        <input type="text" id="fromInput" placeholder="Dari siapa?" oninput="update()">
+        <select id="themeSel" onchange="update()">
+            <option value="theme-luxury">Luxury Gold</option>
+            <option value="theme-cyber">Cyber Neon</option>
+            <option value="theme-anime">Anime Style</option>
+        </select>
+        <button onclick="download4K()">Download 4K</button>
+        <button onclick="shareLink()" style="background: #444; color: white;">Salin Link</button>
+    </div>
+</div>
+
+<script>
+    function startWizard() {
+        document.getElementById('ai-greeting').innerHTML = "Bagus! Silakan isi detail kartu ucapanmu di bawah ini.";
+        document.getElementById('editor').style.display = 'block';
+        document.getElementById('cardCanvas').style.display = 'flex';
     }
 
-    [toIn, msgIn, fromIn, fontSel, themeSel].forEach(el => el.addEventListener('input', update));
+    function update() {
+        document.getElementById('cardTo').textContent = "Untuk: " + (document.getElementById('toInput').value || "...");
+        document.getElementById('cardMsg').textContent = document.getElementById('msgInput').value || "...";
+        document.getElementById('cardFrom').textContent = "Dari: " + (document.getElementById('fromInput').value || "...");
+        document.getElementById('cardCanvas').className = document.getElementById('themeSel').value;
+    }
 
     function download4K() {
-        html2canvas(canvas, { scale: 4 }).then(c => {
+        html2canvas(document.getElementById('cardCanvas'), { scale: 4 }).then(c => {
             const link = document.createElement('a');
-            link.download = 'Atelier-4K.png';
+            link.download = 'Atelier-Card.png';
             link.href = c.toDataURL('image/png', 1.0);
             link.click();
         });
     }
 
     function shareLink() {
-        const data = btoa(JSON.stringify({t:toIn.value, m:msgIn.value, f:fromIn.value, fn:fontSel.value, th:themeSel.value}));
+        const data = btoa(JSON.stringify({
+            t: document.getElementById('toInput').value,
+            m: document.getElementById('msgInput').value,
+            f: document.getElementById('fromInput').value,
+            th: document.getElementById('themeSel').value
+        }));
         navigator.clipboard.writeText(window.location.origin + window.location.pathname + "?data=" + data);
-        alert("Link unik berhasil disalin!");
+        alert("Link unik disalin!");
     }
 
     window.onload = () => {
         const params = new URLSearchParams(window.location.search);
         if (params.has('data')) {
-            try {
-                const d = JSON.parse(atob(params.get('data')));
-                toIn.value = d.t; msgIn.value = d.m; fromIn.value = d.f;
-                fontSel.value = d.fn; themeSel.value = d.th;
-                update();
-            } catch(e) {}
+            const d = JSON.parse(atob(params.get('data')));
+            document.getElementById('toInput').value = d.t;
+            document.getElementById('msgInput').value = d.m;
+            document.getElementById('fromInput').value = d.f;
+            document.getElementById('themeSel').value = d.th;
+            document.getElementById('ai-greeting').style.display = 'none';
+            document.getElementById('editor').style.display = 'block';
+            document.getElementById('cardCanvas').style.display = 'flex';
+            update();
         }
     };
 </script>
