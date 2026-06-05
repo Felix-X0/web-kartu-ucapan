@@ -2,42 +2,49 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Atelier Studio | Interactive Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="google-site-verification" content="eikd6Rzc695Y7uJtpPKJFB6zgb-V08adih6jovwYE6M" />
+    
+    <title>Atelier Studio | Kartu Ucapan Digital Estetik</title>
+    <meta name="description" content="Buat kartu ucapan digital estetik dan mewah dengan Atelier Studio. Kirim pesan spesial kepada orang tersayang sekarang juga.">
+    <meta property="og:title" content="Atelier Studio | Kartu Ucapan Digital">
+    <meta property="og:description" content="Kirim pesan spesial dengan desain estetik dan mewah. Buat kartu ucapanmu sendiri di sini!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://felix-x0.github.io/web-kartu-ucapan/">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Dancing+Script:wght@600&family=Great+Vibes&family=Playfair+Display:ital,wght@1,500&family=Cinzel:wght@500&family=Montserrat:wght@400&display=swap" rel="stylesheet">
+    
     <style>
-        :root { --bg: #0a0a0a; }
+        :root { --bg: #0a0a0a; --accent: #c5a059; }
         body { margin: 0; background: var(--bg); font-family: 'Poppins', sans-serif; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; }
 
         /* Welcome Screen */
         #welcome { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s; }
-        .btn-open { padding: 20px 40px; background: #c5a059; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 1.2em; }
+        .btn-open { padding: 20px 40px; background: var(--accent); border: none; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 1.2em; color: black; }
 
-        /* Animasi Tema */
-        @keyframes cyber-glow { 0%, 100% { box-shadow: 0 0 20px #00ffcc; } 50% { box-shadow: 0 0 50px #ff00ff; } }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-        @keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-
-        .theme-cyber { animation: cyber-glow 2s infinite; border: 2px solid #00ffcc; }
-        .theme-anime { animation: float 3s infinite ease-in-out; border: 2px solid #fff; }
-        .theme-kartun { animation: bounce 2s infinite; border: 4px solid #4a90e2; }
-
-        /* Kartu */
-        .card { width: 300px; aspect-ratio: 3/4; padding: 40px; text-align: center; border-radius: 30px; display: flex; flex-direction: column; justify-content: center; transition: 0.5s; background: #111; }
-        .hidden { display: none; }
+        /* Kartu & Editor */
+        .card { width: 300px; aspect-ratio: 3/4; padding: 40px; text-align: center; border-radius: 30px; display: flex; flex-direction: column; justify-content: center; transition: 0.5s; background: #111; box-sizing: border-box; margin: 0 auto; }
+        .hidden { display: none !important; }
         .editor { width: 300px; margin-top: 20px; background: #1a1a1a; padding: 20px; border-radius: 20px; }
-        input, textarea, select { width: 100%; padding: 10px; margin: 5px 0; background: #333; border: none; color: #fff; border-radius: 5px; }
+        input, textarea, select { width: 100%; padding: 12px; margin: 8px 0; background: #333; border: none; color: #fff; border-radius: 8px; box-sizing: border-box; }
+        
+        /* Tombol Socialbuzz */
+        .btn-sb { background: #ff4d4d; color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; text-decoration: none; display: block; text-align: center; }
+
+        /* Animasi */
+        @keyframes cyber-glow { 0%, 100% { box-shadow: 0 0 20px #00ffcc; } 50% { box-shadow: 0 0 50px #ff00ff; } }
+        .theme-cyber { animation: cyber-glow 2s infinite; border: 2px solid #00ffcc; }
     </style>
 </head>
 <body>
 
-    <!-- WELCOME SCREEN -->
     <div id="welcome">
         <h1>Atelier Studio</h1>
-        <p>Ada pesan spesial untukmu...</p>
+        <p>Karya seni kartu ucapan digital</p>
         <button class="btn-open" onclick="openCard()">Buka Kartu 💌</button>
     </div>
 
-    <!-- APP CONTENT -->
     <div id="app" class="hidden">
         <div id="cardCanvas" class="card theme-luxury">
             <h2 id="cardTo">Untuk: ...</h2>
@@ -49,18 +56,27 @@
             <input type="text" id="toIn" placeholder="Penerima...">
             <textarea id="msgIn" placeholder="Pesan..."></textarea>
             <input type="text" id="fromIn" placeholder="Pengirim...">
+            
             <select id="themeSel" onchange="update()">
-                <option value="theme-luxury">Luxury Gold</option>
-                <option value="theme-cyber">Cyber Neon (Animasi)</option>
-                <option value="theme-anime">Anime (Animasi)</option>
-                <option value="theme-kartun">Cartoon (Animasi)</option>
+                <option value="theme-luxury">Tema: Luxury Gold</option>
+                <option value="theme-cyber">Tema: Cyber Neon</option>
             </select>
-            <button onclick="shareLink()" style="width:100%; padding:10px; margin-top:10px;">Salin Link Kartu</button>
+
+            <select id="fontSel" onchange="update()">
+                <option value="'Poppins', sans-serif">Font: Modern</option>
+                <option value="'Dancing Script', cursive">Font: Handwriting</option>
+                <option value="'Great Vibes', cursive">Font: Elegant</option>
+                <option value="'Playfair Display', serif">Font: Classic</option>
+                <option value="'Cinzel', serif">Font: Royal</option>
+            </select>
+
+            <button onclick="shareLink()" style="width:100%; padding:12px; background:var(--accent); border:none; border-radius:8px; cursor:pointer; font-weight:bold;">Salin Link Kartu</button>
+            
+            <a href="https://sociabuzz.com/cadis77/tribe" class="btn-sb" target="_blank">Dukung Kreator (Socialbuzz)</a>
         </div>
     </div>
 
     <script>
-        // Logika Buka Kartu
         function openCard() {
             document.getElementById('welcome').style.opacity = '0';
             setTimeout(() => {
@@ -69,41 +85,47 @@
             }, 800);
         }
 
-        // Update Tampilan
         function update() {
-            document.getElementById('cardTo').textContent = "Untuk: " + document.getElementById('toIn').value;
-            document.getElementById('cardMsg').textContent = document.getElementById('msgIn').value;
-            document.getElementById('cardFrom').textContent = "Dari: " + document.getElementById('fromIn').value;
+            const to = document.getElementById('toIn').value;
+            const msg = document.getElementById('msgIn').value;
+            const from = document.getElementById('fromIn').value;
+            const font = document.getElementById('fontSel').value;
+
+            document.getElementById('cardTo').textContent = to ? "Untuk: " + to : "Untuk: ...";
+            document.getElementById('cardMsg').textContent = msg || "...";
+            document.getElementById('cardMsg').style.fontFamily = font;
+            document.getElementById('cardFrom').textContent = from ? "Dari: " + from : "Dari: ...";
             document.getElementById('cardCanvas').className = 'card ' + document.getElementById('themeSel').value;
         }
 
-        // Share Link
         function shareLink() {
             const data = btoa(JSON.stringify({
                 t: document.getElementById('toIn').value,
                 m: document.getElementById('msgIn').value,
                 f: document.getElementById('fromIn').value,
-                th: document.getElementById('themeSel').value
+                th: document.getElementById('themeSel').value,
+                ft: document.getElementById('fontSel').value
             }));
             navigator.clipboard.writeText(window.location.origin + window.location.pathname + "?data=" + data);
-            alert("Link sudah dicopy!");
+            alert("Link berhasil disalin!");
         }
 
-        // Load Data Otomatis
         window.onload = () => {
             const params = new URLSearchParams(window.location.search);
             if (params.has('data')) {
-                const d = JSON.parse(atob(params.get('data')));
-                document.getElementById('toIn').value = d.t;
-                document.getElementById('msgIn').value = d.m;
-                document.getElementById('fromIn').value = d.f;
-                document.getElementById('themeSel').value = d.th;
-                document.getElementById('controls').style.display = 'none'; // Sembunyikan editor untuk penerima
-                update();
+                try {
+                    const d = JSON.parse(atob(params.get('data')));
+                    document.getElementById('toIn').value = d.t;
+                    document.getElementById('msgIn').value = d.m;
+                    document.getElementById('fromIn').value = d.f;
+                    document.getElementById('themeSel').value = d.th;
+                    document.getElementById('fontSel').value = d.ft;
+                    document.getElementById('controls').style.display = 'none';
+                    update();
+                } catch(e) { console.error("Data tidak valid"); }
             }
         };
-        
-        // Listener
+
         [document.getElementById('toIn'), document.getElementById('msgIn'), document.getElementById('fromIn')]
         .forEach(el => el.addEventListener('input', update));
     </script>
