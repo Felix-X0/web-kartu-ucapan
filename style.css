@@ -1,0 +1,265 @@
+/* style.css */
+
+/* Definisikan Tema & Variabel Dasar */
+:root {
+    --bg-color: #f4f6f9;
+    --text-primary: #2c3e50;
+    --panel-bg: #ffffff;
+    --accent-color: #3498db;
+    
+    /* Font yang berbeda untuk konten kartu */
+    --font-heading: 'Poppins', sans-serif;
+    --font-card: 'Playfair Display', serif; /* Font estetik untuk kartu */
+
+    /* Warna Default Tema Kartu (Midnight Blue) */
+    --card-bg-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    --card-text-color: #ffffff;
+    --card-accent-color: #f1c40f; /* Kuning emas */
+}
+
+/* Reset Dasar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    color: #7f8c8d;
+    font-weight: 300;
+}
+
+/* Layout Grid Utama */
+.app-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+/* PANEL KONTROL (KIRI) */
+.controls-panel {
+    background-color: var(--panel-bg);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+input[type="text"], textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e0e6ed;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus, textarea:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+/* Selector Tema */
+.theme-selector {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.theme-btn {
+    padding: 0.6rem 1rem;
+    border: 2px solid #e0e6ed;
+    background: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+}
+
+.theme-btn:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.theme-btn.active {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+/* Tombol Download */
+.download-btn {
+    width: 100%;
+    padding: 1rem;
+    background-color: #2ecc71; /* Hijau sukses */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    margin-top: 1rem;
+}
+
+.download-btn:hover {
+    background-color: #27ae60;
+}
+
+.download-btn:active {
+    transform: translateY(2px);
+}
+
+/* PANEL PREVIEW (KANAN) */
+.preview-panel {
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 2rem;
+}
+
+/* KANVAS KARTU (INI YANG AKAN DI-DOWNLOAD) */
+.card-canvas {
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 4/5; /* Rasio potret yang estetik */
+    border-radius: 20px;
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    transition: background 0.5s ease; /* Transisi warna tema */
+}
+
+/* Overlay Estetik (biar ada vibe estetik di atas background) */
+.card-canvas::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png'); /* Tekstur kertas kertas */
+    opacity: 0.3;
+}
+
+/* Konten di dalam kartu */
+.card-content {
+    position: relative;
+    text-align: center;
+    width: 100%;
+    color: var(--card-text-color);
+    transition: color 0.5s ease;
+}
+
+/* Desain Font Khusus Kartu */
+.card-to, .card-from {
+    font-size: 1rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+}
+
+.card-to span, .card-from span {
+    font-weight: 500;
+    color: var(--card-accent-color);
+}
+
+.card-message {
+    font-family: var(--font-card);
+    font-style: italic;
+    font-size: 1.8rem;
+    line-height: 1.4;
+    margin: 2rem 0;
+    font-weight: 500;
+}
+
+.card-from {
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+}
+
+/* TEMA-TEMA KARTU (Mengubah Variabel CSS Kartu) */
+
+/* Tema 1: Midnight Blue (Bawaan) */
+.card-canvas.theme-1 {
+    --card-bg-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    --card-text-color: #ffffff;
+    --card-accent-color: #f1c40f;
+    background: var(--card-bg-gradient);
+}
+
+/* Tema 2: Romantic Pink */
+.card-canvas.theme-2 {
+    --card-bg-gradient: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+    --card-text-color: #5d4037; /* Warna cokelat tua hangat */
+    --card-accent-color: #e91e63; /* Pink tua */
+    background: var(--card-bg-gradient);
+}
+
+/* Tema 3: Forest Green */
+.card-canvas.theme-3 {
+    --card-bg-gradient: linear-gradient(135deg, #134e5e 0%, #71b280 100%);
+    --card-text-color: #ffffff;
+    --card-accent-color: #f1c40f;
+    background: var(--card-bg-gradient);
+}
+
+/* Responsif untuk Layar HP */
+@media (max-width: 768px) {
+    .app-grid {
+        grid-template-columns: 1fr; /* Tumpuk ke bawah */
+    }
+    
+    .preview-panel {
+        position: relative;
+        top: 0;
+        margin-bottom: 2rem;
+    }
+    
+    .card-canvas {
+        padding: 2rem;
+    }
+    
+    .card-message {
+        font-size: 1.4rem;
+    }
+}
