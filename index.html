@@ -5,30 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atelier Card Studio — Bikin Kartu Ucapan Estetik & Mewah</title>
 
+    <!-- ==========================================
+         META TAGS SEO & SOCIAL MEDIA SHARING (OG TAGS)
+         ========================================== -->
     <meta name="description" content="Atelier Card Studio — Ciptakan kartu ucapan digital minimalis, mewah, dan estetik dengan tipografi eksklusif secara gratis dalam hitungan detik.">
     <meta name="keywords" content="kartu ucapan digital, bikin kartu ucapan estetik, pembuat kartu ucapan online, atelier card studio, kartu ucapan premium gratis, kartu ucapan kado">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Felix-x0">
 
+    <!-- Open Graph (Untuk Tampilan Preview Mewah di WhatsApp, IG, FB) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://felix-x0.github.io/web-kartu-ucapan/">
     <meta property="og:title" content="Atelier Card Studio — Bikin Kartu Ucapan Estetik & Mewah">
     <meta property="og:description" content="Bukan sekadar ucapan, ini karya seni. Buat kartu ucapan minimalis modern dengan layout bento gratis di sini.">
     <meta property="og:image" content="https://felix-x0.github.io/web-kartu-ucapan/preview.png">
 
+    <!-- Twitter Card (Untuk Preview di X / Twitter) -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://felix-x0.github.io/web-kartu-ucapan/">
     <meta name="twitter:title" content="Atelier Card Studio — Bikin Kartu Ucapan Estetik">
     <meta name="twitter:description" content="Bukan sekadar ucapan, ini karya seni. Buat kartu ucapan minimalis modern dengan layout bento gratis di sini.">
     <meta name="twitter:image" content="https://felix-x0.github.io/web-kartu-ucapan/preview.png">
 
+    <!-- Google Fonts Curator Pack -->
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Dancing+Script:wght@600&family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Parisienne&family=Playfair+Display:ital,wght@1,500&family=Poppins:wght@300;400;600&family=Sacramento&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- BACKGROUND EFFECT GLOBAL -->
     <div class="glow-bg"></div>
 
+    <!-- HALAMAN 1: CINEMATIC LANDING PAGE -->
     <div id="landingScreen" class="page-screen">
         <div class="hero-card">
             <div class="badge">✦ Atelier Card Studio</div>
@@ -38,6 +46,7 @@
         </div>
     </div>
 
+    <!-- HALAMAN 2: APP STUDIO (BENTO GRID INTERFACE) -->
     <div id="appScreen" class="page-screen hidden">
         <div class="studio-container">
             
@@ -49,6 +58,7 @@
 
             <main class="studio-grid">
                 
+                <!-- KANAN ATAS (MOBILE ONLY): CARD PREVIEW PINNED AT TOP -->
                 <section class="preview-panel">
                     <div id="cardCanvas" class="card-canvas theme-1">
                         <div class="card-content">
@@ -59,13 +69,16 @@
                     </div>
                 </section>
 
+                <!-- PANEL KONTROL KIRI (BENTO STYLE) -->
                 <section class="controls-panel">
                     
+                    <!-- TAB NAVIGASI KHUSUS HP BIAR ENGGAK BERANTAKAN -->
                     <div class="mobile-tabs">
                         <button class="tab-link active" data-tab="tab-konten">📝 Konten</button>
                         <button class="tab-link" data-tab="tab-gaya">🎨 Gaya & Format</button>
                     </div>
 
+                    <!-- SUB-PANEL 1: ISI KONTEN -->
                     <div id="tab-konten" class="tab-content active">
                         <div class="bento-box">
                             <div class="form-group">
@@ -83,9 +96,11 @@
                         </div>
                     </div>
 
+                    <!-- SUB-PANEL 2: GAYA, UKURAN, DAN FORMAT -->
                     <div id="tab-gaya" class="tab-content">
                         <div class="bento-box">
                             
+                            <!-- 1. UKURAN FONT SLIDER -->
                             <div class="form-group">
                                 <div class="label-with-value">
                                     <label>Ukuran Tulisan</label>
@@ -94,6 +109,7 @@
                                 <input type="range" id="fontSizeSlider" min="16" max="40" value="24" class="modern-slider">
                             </div>
 
+                            <!-- 2. PILIHAN RASIO FORMAT -->
                             <div class="form-group">
                                 <label>Format Ukuran Kartu</label>
                                 <div class="ratio-selector">
@@ -103,6 +119,7 @@
                                 </div>
                             </div>
 
+                            <!-- 3. PILIHAN FONT -->
                             <div class="form-group">
                                 <label>Tipografi Eksklusif</label>
                                 <select id="fontSelector" class="custom-select">
@@ -119,6 +136,7 @@
                                 </select>
                             </div>
 
+                            <!-- 4. PALET TEMA BAWAAN -->
                             <div class="form-group">
                                 <label>Palet Warna Kurasi</label>
                                 <div class="theme-selector">
@@ -135,6 +153,7 @@
                                 </div>
                             </div>
 
+                            <!-- 5. CUSTOM COLOR PICKER -->
                             <div class="form-group color-picker-group">
                                 <label>Punya Warna Sendiri?</label>
                                 <div class="color-picker-wrapper">
@@ -146,15 +165,17 @@
                         </div>
                     </div>
 
+                    <!-- TOMBOL EKSEKUSI UTAMA -->
                     <div class="action-bento">
                         <button id="downloadBtn" class="premium-btn primary">Simpan Gambar 高画質</button>
                         <button id="shareBtn" class="premium-btn secondary">Kirim Langsung 📲</button>
                     </div>
 
+                    <!-- BENTO BOX MONETISASI (SOCIABUZZ TRIBE) -->
                     <div class="bento-box donation-box">
                         <div class="donation-content">
                             <span>☕ Suka dengan tool gratis ini?</span>
-                            <a href="https://saweria.co/" target="_blank" class="donation-btn">Dukung Kreator</a>
+                            <a href="https://sociabuzz.com/cadis77/tribe" target="_blank" class="donation-btn">Dukung Kreator</a>
                         </div>
                     </div>
 
@@ -164,6 +185,7 @@
         </div>
     </div>
 
+    <!-- Script Renderer -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
