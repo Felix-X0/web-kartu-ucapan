@@ -68,14 +68,14 @@ document.addEventListener('DOMContentLoaded', () => {
     messageInput.addEventListener('input', updatePreview);
     fromInput.addEventListener('input', updatePreview);
 
-    // FITUR BARU 1: SLIDER UKURAN FONT DINAMIS
+    // SLIDER UKURAN FONT DINAMIS
     fontSizeSlider.addEventListener('input', (e) => {
         const size = e.target.value + "px";
         fontSizeVal.textContent = size;
         cardMessageText.style.fontSize = size;
     });
 
-    // FITUR BARU 2: GANTI FORMAT RASIO KARTU (1:1, 4:5, 9:16)
+    // GANTI FORMAT RASIO KARTU (1:1, 4:5, 9:16)
     ratioBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelector('.ratio-btn.active').classList.remove('active');
@@ -89,15 +89,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // FITUR BARU 3: CUSTOM COLOR PICKER BACKGROUND
+    // CUSTOM COLOR PICKER BACKGROUND
     customColorBg.addEventListener('input', (e) => {
-        // Matikan tema template kalau user pakai warna kustom
         cardCanvas.className = "card-canvas"; 
         cardCanvas.style.background = e.target.value;
-        cardCanvas.style.color = "#ffffff"; // default teks putih biar kontras
+        cardCanvas.style.color = "#ffffff"; 
     });
 
-    // FITUR BARU 4: TOMBOL RESET (CLEAR ALL TEXT)
+    // TOMBOL RESET
     clearBtn.addEventListener('click', () => {
         if(confirm("Apakah kamu ingin mengosongkan semua tulisan kartu?")) {
             toInput.value = "";
@@ -118,14 +117,12 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.theme-btn.active').classList.remove('active');
             btn.classList.add('active');
             
-            // Reset background kustom inline jika ada
             cardCanvas.style.background = "";
             cardCanvas.style.color = "";
             
             const selectedTheme = btn.getAttribute('data-theme');
             cardCanvas.className = `card-canvas ${selectedTheme}`;
             
-            // Sinkronkan ulang status rasio aktif saat ini
             const currentRatio = document.querySelector('.ratio-btn.active').getAttribute('data-ratio');
             if(currentRatio === 'ratio-11') cardCanvas.classList.add('ratio-11');
             if(currentRatio === 'ratio-916') cardCanvas.classList.add('ratio-916');
