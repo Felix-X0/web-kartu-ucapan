@@ -1,8 +1,6 @@
-// script.js
-
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. Ambil semua elemen HTML yang kita butuhkan
+    // 1. Ambil elemen input dan preview
     const toInput = document.getElementById('toInput');
     const messageInput = document.getElementById('messageInput');
     const fromInput = document.getElementById('fromInput');
@@ -13,75 +11,82 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const cardCanvas = document.getElementById('cardCanvas');
     const themeBtns = document.querySelectorAll('.theme-btn');
+    const fontSelector = document.getElementById('fontSelector');
     const downloadBtn = document.getElementById('downloadBtn');
+    const shareBtn = document.getElementById('shareBtn');
 
-    // 2. Fungsi untuk meng-update preview kartu secara real-time
+    // 2. Sinkronisasi Teks Otomatis (Real-time)
     function updatePreview() {
-        cardToText.textContent = toInput.value || "[Nama Penerima]";
-        cardMessageText.textContent = messageInput.value || "[Tulis pesanmu di sini]";
-        cardFromText.textContent = fromInput.value || "[Nama Pengirim]";
+        cardToText.textContent = toInput.value || "[Penerima]";
+        cardMessageText.textContent = messageInput.value || "[Isi Ucapan]";
+        cardFromText.textContent = fromInput.value || "[Pengirim]";
     }
 
-    // 3. Tambahkan event listener ke input teks (buat update real-time)
     toInput.addEventListener('input', updatePreview);
     messageInput.addEventListener('input', updatePreview);
     fromInput.addEventListener('input', updatePreview);
 
-    // 4. Logika untuk mengganti tema kartu
+    // 3. Mengubah Font Pilihan Pengguna
+    fontSelector.addEventListener('change', (e) => {
+        cardMessageText.style.fontFamily = e.target.value;
+    });
+
+    // 4. Mengubah Tema & Motif Warna Kartu
     themeBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Hapus kelas 'active' dari tombol tema lainnya
             document.querySelector('.theme-btn.active').classList.remove('active');
-            // Tambahkan kelas 'active' ke tombol yang diklik
             btn.classList.add('active');
-            
-            // Ambil nama tema dari atribut 'data-theme'
             const selectedTheme = btn.getAttribute('data-theme');
-            
-            // Ganti kelas tema di elemen kanvas kartu
-            // (kita hapus kelas tema lama, tambahkan kelas tema baru)
             cardCanvas.className = `card-canvas ${selectedTheme}`;
         });
     });
 
-    // 5. Fitur Bintang: Download Kartu sebagai Gambar PNG
+    // 5. Logika Download Gambar PNG
     downloadBtn.addEventListener('click', () => {
-        // Tampilkan loading di tombol (biar keren)
-        downloadBtn.textContent = 'Sedang memproses...';
-        downloadBtn.style.backgroundColor = '#95a5a6'; // Warna abu-abu saat proses
+        downloadBtn.textContent = 'Memproses...';
         downloadBtn.disabled = true;
 
-        // Trik Ajaib: Pakai library html2canvas
-        // Fungsi ini bakal nge-scan elemen #cardCanvas dan ngubahnya jadi gambar
-        html2canvas(cardCanvas, {
-            scale: 2, // Kita naikkan resolusinya agar tidak pecah/blur
-            useCORS: true, // Biar bisa baca gambar/font dari luar
-            logging: false, // Matikan log biar cepat
-        }).then(canvas => {
-            // Ubah kanvas gambar jadi URL data PNG
-            const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-            
-            // Buat link download palsu di belakang layar
+        html2canvas(cardCanvas, { scale: 2, useCORS: true, logging: false }).then(canvas => {
+            const image = canvas.toDataURL("image/png");
             const link = document.createElement('a');
-            const fileName = `ucapan-estetik-${toInput.value || 'untuk-kamu'}.png`;
-            link.download = fileName;
+            link.download = `ucapan-${toInput.value || 'card'}.png`;
             link.href = image;
-            
-            // Klik link-nya secara otomatis buat mulai download
             link.click();
 
-            // Kembalikan tombol ke keadaan semula
-            downloadBtn.textContent = 'Download sebagai Gambar (PNG)';
-            downloadBtn.style.backgroundColor = '#2ecc71';
+            downloadBtn.textContent = 'Download Gambar';
             downloadBtn.disabled = false;
-        }).catch(err => {
-            console.error('Ada kesalahan saat membuat gambar:', err);
-            downloadBtn.textContent = 'Gagal men-download :(';
-            downloadBtn.style.backgroundColor = '#e74c3c';
+        }).catch(() => {
+            downloadBtn.textContent = 'Gagal :(';
             downloadBtn.disabled = false;
         });
     });
 
-    // Jalankan fungsi update preview pertama kali saat halaman dimuat
+    // 6. Logika Kirim Langsung (Share API) ke WhatsApp/Aplikasi Lain
+    shareBtn.addEventListener('click', () => {
+        shareBtn.textContent = 'Menyiapkan...';
+        shareBtn.disabled = true;
+
+        html2canvas(cardCanvas, { scale: 2, useCORS: true, logging: false }).then(canvas => {
+            canvas.toBlob(blob => {
+                const file = new File([blob], "kartu-ucapan.png", { type: "image/png" });
+                
+                // Cek apakah sistem browser mendukung fitur Berbagi File
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    navigator.share({
+                        title: 'Kartu Ucapan Digital',
+                        text: 'Hai, ada kartu ucapan spesial nih buat kamu!',
+                        files: [file]
+                    }).catch(err => console.log('Batal berbagi:', err));
+                } else {
+                    alert('Sistem perangkatmu tidak mendukung kirim langsung otomatis. Silakan download gambarnya secara manual ya!');
+                }
+
+                shareBtn.textContent = 'Kirim Langsung 📲';
+                shareBtn.disabled = false;
+            }, 'image/png');
+        });
+    });
+
+    // Jalankan preview awal
     updatePreview();
 });
