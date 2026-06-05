@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // Inisialisasi Komponen
+    // Ambil Elemen DOM
     const toInput = document.getElementById('toInput');
     const messageInput = document.getElementById('messageInput');
     const fromInput = document.getElementById('fromInput');
@@ -15,10 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const downloadBtn = document.getElementById('downloadBtn');
     const shareBtn = document.getElementById('shareBtn');
 
-    // Sinkronisasi Input Teks Kilat (Real-time)
+    // Set font bawaan saat pertama kali dimuat
+    cardMessageText.style.fontFamily = fontSelector.value;
+
+    // Sinkronisasi teks real-time
     function updatePreview() {
         cardToText.textContent = toInput.value || "[Nama]";
-        cardMessageText.textContent = messageInput.value || "[Isi Pesan]";
+        cardMessageText.textContent = messageInput.value || "[Isi Ucapan]";
         cardFromText.textContent = fromInput.value || "[Nama]";
     }
 
@@ -26,12 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
     messageInput.addEventListener('input', updatePreview);
     fromInput.addEventListener('input', updatePreview);
 
-    // Fitur Ganti Font Dinamis
+    // Fitur Ganti Font Langsung via Inline Style (Solusi agar Terbaca Pas Download)
     fontSelector.addEventListener('change', (e) => {
         cardMessageText.style.fontFamily = e.target.value;
     });
 
-    // Fitur Ganti Tema & Motif
+    // Fitur Ganti Tema
     themeBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelector('.theme-btn.active').classList.remove('active');
@@ -41,15 +44,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Fitur Download Gambar Premium
+    // Fitur Download Gambar (Ditingkatkan ke Skala 3x agar Super HD)
     downloadBtn.addEventListener('click', () => {
         downloadBtn.textContent = 'Menyimpan...';
         downloadBtn.disabled = true;
 
         html2canvas(cardCanvas, { 
-            scale: 3, // Skala dinaikkan ke 3x biar gambar super tajam dan tidak pecah
+            scale: 3, 
             useCORS: true, 
-            logging: false 
+            logging: false,
+            allowTaint: false
         }).then(canvas => {
             const image = canvas.toDataURL("image/png");
             const link = document.createElement('a');
@@ -59,13 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             downloadBtn.textContent = 'Simpan Gambar';
             downloadBtn.disabled = false;
-        }).catch(() => {
+        }).catch((err) => {
+            console.error(err);
             downloadBtn.textContent = 'Gagal';
             downloadBtn.disabled = false;
         });
     });
 
-    // Fitur Kirim Langsung (Share API) ke WhatsApp/Aplikasi HP
+    // Fitur Share Otomatis
     shareBtn.addEventListener('click', () => {
         shareBtn.textContent = 'Menyiapkan...';
         shareBtn.disabled = true;
@@ -81,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         files: [file]
                     }).catch(err => console.log('Batal berbagi:', err));
                 } else {
-                    alert('Sistem perangkatmu tidak mendukung fitur kirim otomatis. Silakan klik tombol Simpan Gambar saja ya!');
+                    alert('Sistem perangkatmu tidak mendukung fitur kirim otomatis. Silakan gunakan tombol Simpan Gambar saja ya!');
                 }
 
                 shareBtn.textContent = 'Kirim Langsung 📲';
@@ -90,6 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Jalankan sinkronisasi pertama kali
+    // Jalankan sinkronisasi awal
     updatePreview();
 });
