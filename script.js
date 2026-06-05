@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. Ambil elemen input dan preview
+    // Inisialisasi Komponen
     const toInput = document.getElementById('toInput');
     const messageInput = document.getElementById('messageInput');
     const fromInput = document.getElementById('fromInput');
@@ -15,23 +15,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const downloadBtn = document.getElementById('downloadBtn');
     const shareBtn = document.getElementById('shareBtn');
 
-    // 2. Sinkronisasi Teks Otomatis (Real-time)
+    // Sinkronisasi Input Teks Kilat (Real-time)
     function updatePreview() {
-        cardToText.textContent = toInput.value || "[Penerima]";
-        cardMessageText.textContent = messageInput.value || "[Isi Ucapan]";
-        cardFromText.textContent = fromInput.value || "[Pengirim]";
+        cardToText.textContent = toInput.value || "[Nama]";
+        cardMessageText.textContent = messageInput.value || "[Isi Pesan]";
+        cardFromText.textContent = fromInput.value || "[Nama]";
     }
 
     toInput.addEventListener('input', updatePreview);
     messageInput.addEventListener('input', updatePreview);
     fromInput.addEventListener('input', updatePreview);
 
-    // 3. Mengubah Font Pilihan Pengguna
+    // Fitur Ganti Font Dinamis
     fontSelector.addEventListener('change', (e) => {
         cardMessageText.style.fontFamily = e.target.value;
     });
 
-    // 4. Mengubah Tema & Motif Warna Kartu
+    // Fitur Ganti Tema & Motif
     themeBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelector('.theme-btn.active').classList.remove('active');
@@ -41,44 +41,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 5. Logika Download Gambar PNG
+    // Fitur Download Gambar Premium
     downloadBtn.addEventListener('click', () => {
-        downloadBtn.textContent = 'Memproses...';
+        downloadBtn.textContent = 'Menyimpan...';
         downloadBtn.disabled = true;
 
-        html2canvas(cardCanvas, { scale: 2, useCORS: true, logging: false }).then(canvas => {
+        html2canvas(cardCanvas, { 
+            scale: 3, // Skala dinaikkan ke 3x biar gambar super tajam dan tidak pecah
+            useCORS: true, 
+            logging: false 
+        }).then(canvas => {
             const image = canvas.toDataURL("image/png");
             const link = document.createElement('a');
-            link.download = `ucapan-${toInput.value || 'card'}.png`;
+            link.download = `AtelierCard-${toInput.value || 'Premium'}.png`;
             link.href = image;
             link.click();
 
-            downloadBtn.textContent = 'Download Gambar';
+            downloadBtn.textContent = 'Simpan Gambar';
             downloadBtn.disabled = false;
         }).catch(() => {
-            downloadBtn.textContent = 'Gagal :(';
+            downloadBtn.textContent = 'Gagal';
             downloadBtn.disabled = false;
         });
     });
 
-    // 6. Logika Kirim Langsung (Share API) ke WhatsApp/Aplikasi Lain
+    // Fitur Kirim Langsung (Share API) ke WhatsApp/Aplikasi HP
     shareBtn.addEventListener('click', () => {
         shareBtn.textContent = 'Menyiapkan...';
         shareBtn.disabled = true;
 
-        html2canvas(cardCanvas, { scale: 2, useCORS: true, logging: false }).then(canvas => {
+        html2canvas(cardCanvas, { scale: 3, useCORS: true, logging: false }).then(canvas => {
             canvas.toBlob(blob => {
-                const file = new File([blob], "kartu-ucapan.png", { type: "image/png" });
+                const file = new File([blob], "AtelierCard.png", { type: "image/png" });
                 
-                // Cek apakah sistem browser mendukung fitur Berbagi File
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                     navigator.share({
-                        title: 'Kartu Ucapan Digital',
-                        text: 'Hai, ada kartu ucapan spesial nih buat kamu!',
+                        title: 'Kartu Ucapan Premium',
+                        text: 'Ada kartu ucapan spesial yang dibuat khusus untukmu.',
                         files: [file]
                     }).catch(err => console.log('Batal berbagi:', err));
                 } else {
-                    alert('Sistem perangkatmu tidak mendukung kirim langsung otomatis. Silakan download gambarnya secara manual ya!');
+                    alert('Sistem perangkatmu tidak mendukung fitur kirim otomatis. Silakan klik tombol Simpan Gambar saja ya!');
                 }
 
                 shareBtn.textContent = 'Kirim Langsung 📲';
@@ -87,6 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Jalankan preview awal
+    // Jalankan sinkronisasi pertama kali
     updatePreview();
 });
