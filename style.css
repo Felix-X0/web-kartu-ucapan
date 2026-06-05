@@ -1,30 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Dancing+Script&family=Cinzel&family=Playfair+Display&family=Special+Elite&display=swap');
-
-:root { --bg: #1a1a1a; --txt: #fff; --acc: #ffd700; }
-
-/* TEMA LENGKAP */
-.theme-luxury { --bg: #0a0a0a; --txt: #e0e0e0; --acc: #c5a059; }
-.theme-cyber { --bg: #050510; --txt: #00ffcc; --acc: #ff00ff; }
-.theme-anime { --bg: #ffffff; --txt: #000000; --acc: #ff3e3e; }
-.theme-kartun { --bg: #ffe066; --txt: #2b2b2b; --acc: #4a90e2; }
-.theme-floral { --bg: #fff0f5; --txt: #5d4037; --acc: #ff80ab; }
-
-body { background: #111; display: flex; justify-content: center; padding: 20px; font-family: sans-serif; }
-
-.card-container {
-    background-color: var(--bg);
-    color: var(--txt);
-    border: 3px solid var(--acc);
-    padding: 40px;
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    transition: all 0.5s ease;
-    border-radius: 20px;
+/* FIX LAYOUT: Memaksa elemen yang hidden agar benar-benar hilang */
+.hidden {
+    display: none !important;
 }
 
-.controls { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; width: 100%; max-width: 400px; }
-input, textarea, select, button { padding: 12px; border-radius: 8px; border: 1px solid #444; background: #222; color: white; width: 100%; box-sizing: border-box; }
-button { cursor: pointer; background: var(--acc); color: black; font-weight: bold; border: none; margin-top: 10px; }
-label { color: #aaa; font-size: 12px; margin-top: 5px; }
-h3 { color: white; margin-bottom: 5px; }
+body { background: #111; color: #fff; font-family: sans-serif; display: flex; justify-content: center; padding: 20px; }
+
+/* TEMA */
+.theme-luxury { background: #0a0a0a; border: 2px solid #c5a059; padding: 20px; border-radius: 15px; }
+
+.card-container { width: 100%; max-width: 400px; text-align: center; margin-bottom: 20px; }
+.controls { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 400px; }
+input, textarea, button { padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; }
+button { cursor: pointer; background: #c5a059; color: black; font-weight: bold; }
