@@ -4,98 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <!-- VERIFIKASI GOOGLE -->
     <meta name="google-site-verification" content="eikd6Rzc695Y7uJtpPKJFB6zgb-V08adih6jovwYE6M" />
     
-    <title>Atelier Studio | Kartu Ucapan Digital Estetik</title>
-    <meta name="description" content="Buat kartu ucapan digital estetik dan mewah dengan Atelier Studio. Kirim pesan spesial kepada orang tersayang sekarang juga.">
-    <meta property="og:title" content="Atelier Studio | Kartu Ucapan Digital">
-    <meta property="og:description" content="Kirim pesan spesial dengan desain estetik dan mewah. Buat kartu ucapanmu sendiri di sini!">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://felix-x0.github.io/web-kartu-ucapan/">
+    <title>Atelier Studio | Professional Card</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Dancing+Script:wght@600&family=Great+Vibes&family=Playfair+Display:ital,wght@1,500&family=Cinzel:wght@500&family=Montserrat:wght@400&display=swap" rel="stylesheet">
+    <!-- Library untuk Convert ke Gambar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:ital@0;1&family=Dancing+Script&family=Cinzel&display=swap" rel="stylesheet">
     
     <style>
-        :root { --bg: #0a0a0a; --accent: #c5a059; }
-        body { margin: 0; background: var(--bg); font-family: 'Poppins', sans-serif; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; }
+        :root { --bg: #f4f4f9; --card-bg: rgba(255, 255, 255, 0.9); --text: #1a1a1a; --accent: #c5a059; }
+        .dark-theme { --bg: #0a0a0a; --card-bg: rgba(30, 30, 30, 0.9); --text: #ffffff; --accent: #d4af37; }
 
-        /* Welcome Screen */
-        #welcome { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s; }
-        .btn-open { padding: 20px 40px; background: var(--accent); border: none; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 1.2em; color: black; }
+        body { margin: 0; background-color: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; transition: 0.5s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
 
-        /* Kartu & Editor */
-        .card { width: 300px; aspect-ratio: 3/4; padding: 40px; text-align: center; border-radius: 30px; display: flex; flex-direction: column; justify-content: center; transition: 0.5s; background: #111; box-sizing: border-box; margin: 0 auto; }
+        .glass { background: var(--card-bg); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+        .card { width: 350px; aspect-ratio: 3/4; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; margin-bottom: 20px; padding: 30px; }
         .hidden { display: none !important; }
-        .editor { width: 300px; margin-top: 20px; background: #1a1a1a; padding: 20px; border-radius: 20px; }
-        input, textarea, select { width: 100%; padding: 12px; margin: 8px 0; background: #333; border: none; color: #fff; border-radius: 8px; box-sizing: border-box; }
         
-        /* Tombol Socialbuzz */
-        .btn-sb { background: #ff4d4d; color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; text-decoration: none; display: block; text-align: center; }
-
-        /* Animasi */
-        @keyframes cyber-glow { 0%, 100% { box-shadow: 0 0 20px #00ffcc; } 50% { box-shadow: 0 0 50px #ff00ff; } }
-        .theme-cyber { animation: cyber-glow 2s infinite; border: 2px solid #00ffcc; }
+        #themeToggle { position: fixed; top: 20px; right: 20px; padding: 10px 20px; cursor: pointer; border-radius: 20px; border: none; background: var(--accent); color: white; }
+        
+        input, textarea, select, button { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ccc; background: var(--bg); color: var(--text); }
+        .btn-main { background: var(--accent); color: white; border: none; font-weight: bold; cursor: pointer; }
+        .btn-share { background: #007bff; color: white; border: none; font-weight: bold; cursor: pointer; }
+        .btn-sb { background: #ff4d4d; color: white; text-decoration: none; display: block; text-align: center; padding: 12px; border-radius: 8px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div id="welcome">
+    <button id="themeToggle" onclick="toggleTheme()">☀️ / 🌙</button>
+
+    <div id="welcome" class="glass" style="text-align: center; margin-top: 100px;">
         <h1>Atelier Studio</h1>
-        <p>Karya seni kartu ucapan digital</p>
-        <button class="btn-open" onclick="openCard()">Buka Kartu 💌</button>
+        <button class="btn-main" onclick="openCard()">Mulai Mendesain 💌</button>
     </div>
 
-    <div id="app" class="hidden">
-        <div id="cardCanvas" class="card theme-luxury">
+    <div id="app" class="hidden" style="margin-top: 50px;">
+        <div id="cardCanvas" class="card glass">
             <h2 id="cardTo">Untuk: ...</h2>
-            <p id="cardMsg" style="font-size: 1.5em; margin: 20px 0;">...</p>
+            <p id="cardMsg" style="font-size: 1.5em; margin: 20px 0; word-break: break-word;">...</p>
             <p id="cardFrom">Dari: ...</p>
         </div>
 
-        <div id="controls" class="editor">
+        <div class="glass" style="width: 350px;">
             <input type="text" id="toIn" placeholder="Penerima...">
             <textarea id="msgIn" placeholder="Pesan..."></textarea>
             <input type="text" id="fromIn" placeholder="Pengirim...">
             
-            <select id="themeSel" onchange="update()">
-                <option value="theme-luxury">Tema: Luxury Gold</option>
-                <option value="theme-cyber">Tema: Cyber Neon</option>
-            </select>
-
             <select id="fontSel" onchange="update()">
-                <option value="'Poppins', sans-serif">Font: Modern</option>
-                <option value="'Dancing Script', cursive">Font: Handwriting</option>
-                <option value="'Great Vibes', cursive">Font: Elegant</option>
-                <option value="'Playfair Display', serif">Font: Classic</option>
-                <option value="'Cinzel', serif">Font: Royal</option>
+                <option value="'Poppins', sans-serif">Modern</option>
+                <option value="'Playfair Display', serif">Klasik</option>
+                <option value="'Dancing Script', cursive">Handwriting</option>
+                <option value="'Cinzel', serif">Royal</option>
             </select>
-
-            <button onclick="shareLink()" style="width:100%; padding:12px; background:var(--accent); border:none; border-radius:8px; cursor:pointer; font-weight:bold;">Salin Link Kartu</button>
             
-            <a href="https://sociabuzz.com/cadis77/tribe" class="btn-sb" target="_blank">Dukung Kreator (Socialbuzz)</a>
+            <button class="btn-share" onclick="shareDirectly()">Bagikan Kartu (WA/IG/DLL)</button>
+            <button class="btn-main" onclick="shareLink()">Salin Link Web</button>
+            <a href="https://sociabuzz.com/cadis77/tribe" class="btn-sb" target="_blank">Dukung Kreator</a>
         </div>
     </div>
 
     <script>
-        function openCard() {
-            document.getElementById('welcome').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('welcome').style.display = 'none';
-                document.getElementById('app').classList.remove('hidden');
-            }, 800);
-        }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+        function openCard() { document.getElementById('welcome').classList.add('hidden'); document.getElementById('app').classList.remove('hidden'); }
 
         function update() {
-            const to = document.getElementById('toIn').value;
-            const msg = document.getElementById('msgIn').value;
-            const from = document.getElementById('fromIn').value;
-            const font = document.getElementById('fontSel').value;
+            document.getElementById('cardTo').textContent = "Untuk: " + document.getElementById('toIn').value;
+            document.getElementById('cardMsg').textContent = document.getElementById('msgIn').value;
+            document.getElementById('cardMsg').style.fontFamily = document.getElementById('fontSel').value;
+            document.getElementById('cardFrom').textContent = "Dari: " + document.getElementById('fromIn').value;
+        }
 
-            document.getElementById('cardTo').textContent = to ? "Untuk: " + to : "Untuk: ...";
-            document.getElementById('cardMsg').textContent = msg || "...";
-            document.getElementById('cardMsg').style.fontFamily = font;
-            document.getElementById('cardFrom').textContent = from ? "Dari: " + from : "Dari: ...";
-            document.getElementById('cardCanvas').className = 'card ' + document.getElementById('themeSel').value;
+        // FUNGSI SHARE LANGSUNG KE APLIKASI
+        async function shareDirectly() {
+            const card = document.getElementById('cardCanvas');
+            const canvas = await html2canvas(card, { scale: 4, backgroundColor: null });
+            
+            canvas.toBlob(async (blob) => {
+                const file = new File([blob], "Atelier-Card.png", { type: "image/png" });
+                
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    try {
+                        await navigator.share({
+                            files: [file],
+                            title: 'Kartu Ucapan',
+                            text: 'Lihat kartu ucapan spesial untukmu!'
+                        });
+                    } catch (err) {
+                        console.log('Share dibatalkan');
+                    }
+                } else {
+                    // Fallback jika browser tidak support share
+                    const link = document.createElement('a');
+                    link.download = 'Atelier-Card.png';
+                    link.href = canvas.toDataURL('image/png', 1.0);
+                    link.click();
+                }
+            });
         }
 
         function shareLink() {
@@ -103,12 +111,14 @@
                 t: document.getElementById('toIn').value,
                 m: document.getElementById('msgIn').value,
                 f: document.getElementById('fromIn').value,
-                th: document.getElementById('themeSel').value,
                 ft: document.getElementById('fontSel').value
             }));
             navigator.clipboard.writeText(window.location.origin + window.location.pathname + "?data=" + data);
             alert("Link berhasil disalin!");
         }
+
+        [document.getElementById('toIn'), document.getElementById('msgIn'), document.getElementById('fromIn')]
+        .forEach(el => el.addEventListener('input', update));
 
         window.onload = () => {
             const params = new URLSearchParams(window.location.search);
@@ -118,16 +128,13 @@
                     document.getElementById('toIn').value = d.t;
                     document.getElementById('msgIn').value = d.m;
                     document.getElementById('fromIn').value = d.f;
-                    document.getElementById('themeSel').value = d.th;
                     document.getElementById('fontSel').value = d.ft;
-                    document.getElementById('controls').style.display = 'none';
+                    document.getElementById('welcome').classList.add('hidden');
+                    document.getElementById('app').classList.remove('hidden');
                     update();
-                } catch(e) { console.error("Data tidak valid"); }
+                } catch(e) {}
             }
         };
-
-        [document.getElementById('toIn'), document.getElementById('msgIn'), document.getElementById('fromIn')]
-        .forEach(el => el.addEventListener('input', update));
     </script>
 </body>
 </html>
