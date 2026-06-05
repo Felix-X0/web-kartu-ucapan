@@ -68,7 +68,7 @@ if(clearBtn) {
 }
 
 // ===================================================
-// 3. FONT CONFIGURATOR & RATIO MODIFIER
+// 3. FONT CONFIGURATOR & RATIO MODIFIER (FIXED)
 // ===================================================
 const fontSizeSlider = document.getElementById('fontSizeSlider');
 const fontSizeVal = document.getElementById('fontSizeVal');
@@ -95,6 +95,7 @@ ratioBtns.forEach(btn => {
     });
 });
 
+// PERBAIKAN: Font di halaman editor sekarang langsung berubah real-time saat dipilih
 const fontSelector = document.getElementById('fontSelector');
 if(fontSelector) {
     fontSelector.addEventListener('change', () => {
@@ -193,122 +194,114 @@ if(downloadBtn) {
 }
 
 // ===================================================
-// 7. NEW FEATURE: ENVELOPE DYNAMIC URL LINKS GENERATOR
+// 7. SHARE ENGINE: BASE64 COMPRESSION (LINK RAPI & PENDEK)
 // ===================================================
 const shareBtn = document.getElementById('shareBtn');
 
 if(shareBtn) {
     shareBtn.addEventListener('click', () => {
-        // Ambil info tema aktif
         let currentTheme = 'theme-1';
         themeBtns.forEach(b => {
             if(b.classList.contains('active')) currentTheme = b.getAttribute('data-theme');
         });
 
-        // Ambil info rasio aktif
         let currentRatio = 'ratio-45';
         ratioBtns.forEach(b => {
             if(b.classList.contains('active')) currentRatio = b.getAttribute('data-ratio');
         });
 
-        // Buat enkripsi query data parameter
-        const params = new URLSearchParams();
-        params.set('to', toInput.value);
-        params.set('msg', messageInput.value);
-        params.set('from', fromInput.value);
-        params.set('size', fontSizeSlider.value);
-        params.set('font', fontSelector.value);
-        params.set('fx', effectSelector.value);
-        params.set('ft', filterSelector.value);
-        params.set('theme', currentTheme);
-        params.set('ratio', currentRatio);
-        if(cardCanvas.style.backgroundColor) {
-            params.set('customBg', cardCanvas.style.backgroundColor);
-        }
+        // Simpan konfigurasi ke dalam satu objek bersih tanpa tanda petik perusak font
+        const cardData = {
+            to: toInput.value,
+            msg: messageInput.value,
+            from: fromInput.value,
+            size: fontSizeSlider.value,
+            font: fontSelector.value.replace(/'/g, ""), 
+            fx: effectSelector.value,
+            ft: filterSelector.value,
+            theme: currentTheme,
+            ratio: currentRatio,
+            customBg: cardCanvas.style.backgroundColor || ""
+        };
 
-        // Tautan unik khusus pengiriman amplop kejutan
-        const finalShareUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+        // Enkripsi data objek ke Base64 agar link rapi dan pendek di WhatsApp
+        const jsonString = JSON.stringify(cardData);
+        const encodedData = btoa(encodeURIComponent(jsonString));
+
+        const finalShareUrl = `${window.location.origin}${window.location.pathname}?v=${encodedData}`;
 
         if (navigator.share) {
             navigator.share({
                 title: 'Amplop Eksklusif Untukmu ✉️',
-                text: `Halo ${toInput.value}, ada kiriman surat digital estetik misterius buat kamu nih. Buka di sini ya:`,
+                text: `Halo ${toInput.value}, ada kiriman surat digital misterius buat kamu nih. Buka di sini ya:`,
                 url: finalShareUrl
             }).catch(err => console.log(err));
         } else {
             navigator.clipboard.writeText(finalShareUrl).then(() => {
-                alert('Tautan Amplop Digital berhasil disalin! Kirimkan link ini ke WhatsApp atau Instagram temanmu sekarang 📲');
+                alert('Tautan Amplop Digital berhasil disalin! Kirimkan link rapi ini ke temanmu sekarang 📲');
             });
         }
     });
 }
 
 // ===================================================
-// 8. AUTOMATIC LOADER: SYSTEM DECODER FOR RECIPIENT
+// 8. AUTOMATIC DECODER & LOADER UNTUK PENERIMA
 // ===================================================
 window.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     
-    // Jika link mengandung query parameter "?to=", tandanya ini diakses oleh si penerima kartu!
-    if (urlParams.has('to')) {
-        // Sembunyikan generator utama sepenuhnya agar rahasia
+    // Deteksi link kiriman amplop versi terkompresi (?v=...)
+    if (urlParams.has('v')) {
         document.getElementById('mainGeneratorWrapper').style.display = 'none';
-        
-        // Munculkan layar amplop penerima
         const recipientScreen = document.getElementById('recipientScreen');
         recipientScreen.classList.remove('hidden');
 
-        // Tarik data parameter dari URL tautan
-        const rTo = urlParams.get('to');
-        const rMsg = urlParams.get('msg');
-        const rFrom = urlParams.get('from');
-        const rSize = urlParams.get('size');
-        const rFont = urlParams.get('font');
-        const rFx = urlParams.get('fx');
-        const rFt = urlParams.get('ft');
-        const rTheme = urlParams.get('theme');
-        const rRatio = urlParams.get('ratio');
-        const rCustomBg = urlParams.get('customBg');
+        try {
+            // Pecahkan kembali kode Base64 menjadi data asli
+            const encodedData = urlParams.get('v');
+            const decodedData = JSON.parse(decodeURIComponent(atob(encodedData)));
 
-        // Isi data teks pada nama sampul depan amplop & isi kartu
-        document.getElementById('envelopeToName').textContent = rTo;
-        document.getElementById('recCardToText').textContent = rTo;
-        document.getElementById('recCardMessageText').textContent = rMsg;
-        document.getElementById('recCardFromText').textContent = rFrom;
+            // Distribusi teks ke elemen amplop & kartu
+            document.getElementById('envelopeToName').textContent = decodedData.to;
+            document.getElementById('recCardToText').textContent = decodedData.to;
+            document.getElementById('recCardMessageText').textContent = decodedData.msg;
+            document.getElementById('recCardFromText').textContent = decodedData.from;
 
-        // Racik penampilan kartu sesuai konfigurasi pembuatnya
-        const recCard = document.getElementById('recipientCard');
-        const recCardOverlay = document.getElementById('recipientCardOverlay');
+            const recCard = document.getElementById('recipientCard');
+            const recCardOverlay = document.getElementById('recipientCardOverlay');
 
-        // Pasang ukuran font, tipografi, dan aspek format rasio ukuran
-        document.getElementById('recCardMessageText').style.fontSize = rSize + 'px';
-        recCard.style.fontFamily = rFont;
-        recCard.classList.remove('ratio-45');
-        recCard.classList.add(rRatio);
+            // Kembalikan konfigurasi font & ukuran teks
+            document.getElementById('recCardMessageText').style.fontSize = decodedData.size + 'px';
+            recCard.style.fontFamily = decodedData.font.includes('sans-serif') ? decodedData.font : `'${decodedData.font}', serif`;
+            
+            recCard.classList.remove('ratio-45');
+            recCard.classList.add(decodedData.ratio);
 
-        // Pasang skema warna tema / warna kustom pilihan
-        if (rCustomBg) {
-            recCard.style.backgroundColor = rCustomBg;
-        } else {
-            recCard.classList.remove('theme-1');
-            recCard.classList.add(rTheme);
+            // Kembalikan konfigurasi warna
+            if (decodedData.customBg) {
+                recCard.style.backgroundColor = decodedData.customBg;
+            } else {
+                recCard.classList.remove('theme-1');
+                recCard.classList.add(decodedData.theme);
+            }
+
+            // Aktifkan efek atmosfer & filter kontras
+            if (decodedData.fx && decodedData.fx !== 'fx-none') recCardOverlay.classList.add(decodedData.fx);
+            if (decodedData.ft && decodedData.ft !== 'ft-none') recCard.classList.add(decodedData.ft);
+
+        } catch (e) {
+            console.error("Gagal membaca enkripsi data kartu:", e);
+            alert("Maaf, link kartu ucapan ini rusak atau tidak valid.");
         }
 
-        // Aktifkan efek atmosfer & filter kontras sinematik
-        if (rFx && rFx !== 'fx-none') recCardOverlay.classList.add(rFx);
-        if (rFt && rFt !== 'ft-none') recCard.classList.add(rFt);
-
-        // TRIGGER ANIMASI PEMBUKAAN AMPLOP EKSKLUSIF
+        // ANIMASI INTERAKTIF AMPLOP SURAT
         const openEnvelopeBtn = document.getElementById('openEnvelopeBtn');
         const envelopeWrapper = document.getElementById('envelopeWrapper');
         const recipientCardContainer = document.getElementById('recipientCardContainer');
         const recipientCta = document.getElementById('recipientCta');
 
         openEnvelopeBtn.addEventListener('click', () => {
-            // Amplop meluncur naik dan memudar menghilang
             envelopeWrapper.classList.add('opened');
-            
-            // Kartu kejutan meluncur keluar secara dramatis beberapa saat kemudian
             setTimeout(() => {
                 envelopeWrapper.style.display = 'none';
                 recipientCardContainer.classList.remove('hidden-card');
