@@ -1,97 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. SELECTOR
-    const toInput = document.getElementById('toInput');
-    const msgInput = document.getElementById('messageInput');
-    const fromInput = document.getElementById('fromInput');
-    const cardTo = document.getElementById('cardToText');
-    const cardMsg = document.getElementById('cardMessageText');
-    const cardFrom = document.getElementById('cardFromText');
-    const cardCanvas = document.getElementById('cardCanvas');
-    const shareBtn = document.getElementById('shareBtn');
-    const startBtn = document.getElementById('startBtn');
     const landingScreen = document.getElementById('landingScreen');
     const appScreen = document.getElementById('appScreen');
-    const themeBtns = document.querySelectorAll('.theme-btn');
-    const tabLinks = document.querySelectorAll('.tab-link');
-    const tabContents = document.querySelectorAll('.tab-content');
+    const startBtn = document.getElementById('startBtn');
+    const backBtn = document.getElementById('backBtn');
 
-    // 2. NAVIGASI AWAL
+    // Navigasi Layar
     startBtn.addEventListener('click', () => {
         landingScreen.classList.add('hidden');
         appScreen.classList.remove('hidden');
     });
 
-    // 3. TAB SWITCHING
-    tabLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            tabLinks.forEach(l => l.classList.remove('active'));
-            tabContents.forEach(c => c.classList.remove('active'));
-            
-            link.classList.add('active');
-            document.getElementById(link.getAttribute('data-tab')).classList.add('active');
+    backBtn.addEventListener('click', () => {
+        appScreen.classList.add('hidden');
+        landingScreen.classList.remove('hidden');
+    });
+
+    // Sinkronisasi Teks
+    const inputs = ['toInput', 'messageInput', 'fromInput'];
+    inputs.forEach(id => {
+        document.getElementById(id).addEventListener('input', () => {
+            document.getElementById('cardToText').textContent = "Untuk: " + document.getElementById('toInput').value;
+            document.getElementById('cardMessageText').textContent = document.getElementById('messageInput').value;
+            document.getElementById('cardFromText').textContent = "Dari: " + document.getElementById('fromInput').value;
         });
     });
 
-    // 4. SINKRONISASI TEKS
-    const updateCard = () => {
-        cardTo.textContent = toInput.value || "Kak Shinta";
-        cardMsg.textContent = msgInput.value;
-        cardFrom.textContent = fromInput.value || "Adun";
-    };
-
-    [toInput, msgInput, fromInput].forEach(el => {
-        el.addEventListener('input', updateCard);
-    });
-
-    // 5. GANTI TEMA
-    themeBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const theme = btn.getAttribute('data-theme');
-            // Menghapus semua class theme yang ada
-            cardCanvas.className = cardCanvas.className.replace(/theme-\d+/g, '');
-            cardCanvas.classList.add(theme);
-            
-            // UI feedback
-            themeBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        });
-    });
-
-    // 6. GENERATE & SHARE
-    shareBtn.addEventListener('click', () => {
-        const currentTheme = Array.from(cardCanvas.classList).find(c => c.startsWith('theme-'));
+    // Share Link
+    document.getElementById('shareBtn').addEventListener('click', () => {
         const data = {
-            to: toInput.value,
-            msg: msgInput.value,
-            from: fromInput.value,
-            theme: currentTheme
+            to: document.getElementById('toInput').value,
+            msg: document.getElementById('messageInput').value,
+            from: document.getElementById('fromInput').value
         };
-        
         const encoded = btoa(JSON.stringify(data));
         const url = window.location.origin + window.location.pathname + "?data=" + encoded;
-        
         navigator.clipboard.writeText(url);
-        alert("Tautan kartu berhasil disalin! Silakan kirim ke orang tersayang.");
+        alert("Link disalin!");
     });
-
-    // 7. LOAD DATA DARI URL
-    const params = new URLSearchParams(window.location.search);
-    if (params.has('data')) {
-        try {
-            const decoded = JSON.parse(atob(params.get('data')));
-            toInput.value = decoded.to;
-            msgInput.value = decoded.msg;
-            fromInput.value = decoded.from;
-            
-            // Terapkan tema
-            cardCanvas.className = cardCanvas.className.replace(/theme-\d+/g, '');
-            cardCanvas.classList.add(decoded.theme);
-            
-            updateCard();
-            
-            // Tampilkan app langsung
-            landingScreen.classList.add('hidden');
-            appScreen.classList.remove('hidden');
-        } catch(e) { console.error("Data link tidak valid"); }
-    }
 });
