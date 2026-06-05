@@ -4,26 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atelier Studio Premium</title>
-    <!-- GOOGLE SEARCH CONSOLE VERIFIKASI (JANGAN DIHAPUS) -->
     <meta name="google-site-verification" content="eikd6Rzc695Y7uJtpPKJFB6zgb-V08adih6jovwYE6M" />
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="main-wrapper">
-        <!-- AREA KARTU -->
         <div id="cardCanvas" class="card-container theme-luxury">
             <h2 id="cardToText">Untuk: Kak Shinta</h2>
             <p id="cardMessageText">Selamat Ulang Tahun! Semoga bahagia selalu.</p>
             <p id="cardFromText">Dari: Adun</p>
         </div>
 
-        <!-- PANEL KONTROL -->
         <div class="controls">
+            <h3>Editor Kartu</h3>
             <input type="text" id="toInput" placeholder="Penerima..." value="Kak Shinta">
             <textarea id="messageInput" placeholder="Pesan...">Selamat Ulang Tahun! Semoga bahagia selalu.</textarea>
             <input type="text" id="fromInput" placeholder="Pengirim..." value="Adun">
 
+            <label>Pilih Font:</label>
             <select id="fontSelector">
                 <option value="'Cormorant Garamond', serif">Elegance (Cormorant)</option>
                 <option value="'Dancing Script', cursive">Handwriting (Dancing)</option>
@@ -32,6 +31,7 @@
                 <option value="'Special Elite', cursive">Typewriter (Elite)</option>
             </select>
 
+            <label>Pilih Tema:</label>
             <select id="themeSelector">
                 <option value="theme-luxury">Luxury Gold</option>
                 <option value="theme-cyber">Cyber Neon</option>
