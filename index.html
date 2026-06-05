@@ -5,177 +5,219 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atelier Card Studio — Bikin Kartu Ucapan Estetik & Mewah</title>
 
+    <!-- VERIFIKASI GOOGLE SEARCH CONSOLE (TETAP AMAN) -->
     <meta name="google-site-verification" content="eikd6Rzc695Y7uJtpPKJFB6zgb-V08adih6jovwYE6M" />
 
+    <!-- META TAGS SEO & SOCIAL MEDIA SHARING -->
     <meta name="description" content="Atelier Card Studio — Ciptakan kartu ucapan digital minimalis, mewah, dan estetik dengan tipografi eksklusif secara gratis dalam hitungan detik.">
-    <meta name="keywords" content="kartu ucapan digital, bikin kartu ucapan estetik, pembuat kartu ucapan online, atelier card studio, kartu ucapan premium gratis, kartu ucapan kado">
+    <meta name="keywords" content="kartu ucapan digital, bikin kartu ucapan estetik, pembuat kartu ucapan online, atelier card studio, kartu ucapan premium gratis">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Felix-x0">
 
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://felix-x0.github.io/web-kartu-ucapan/">
     <meta property="og:title" content="Atelier Card Studio — Bikin Kartu Ucapan Estetik & Mewah">
     <meta property="og:description" content="Bukan sekadar ucapan, ini karya seni. Buat kartu ucapan minimalis modern dengan layout bento gratis di sini.">
     <meta property="og:image" content="https://felix-x0.github.io/web-kartu-ucapan/preview.png">
 
+    <!-- Google Fonts Curator Pack -->
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght=1,400;1,600&family=Dancing+Script:wght=600&family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Parisienne&family=Playfair+Display:ital,wght=1,500&family=Poppins:wght@300;400;600&family=Sacramento&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- BACKGROUND EFFECT GLOBAL -->
     <div class="glow-bg"></div>
 
-    <div id="landingScreen" class="page-screen">
-        <div class="hero-card">
-            <div class="badge">✦ Atelier Card Studio</div>
-            <h1 class="hero-title">Bukan Sekadar Ucapan. <br>Ini <span>Karya Seni</span>.</h1>
-            <p class="hero-subtitle">Ciptakan kartu ucapan digital mewah dengan tipografi eksklusif dan tata letak minimalis modern dalam hitungan detik.</p>
-            <button id="startBtn" class="cta-button">Mulai Mendesain — Gratis</button>
+    <!-- Halaman Utama & Studio Editor (Akan disembunyikan otomatis jika mendeteksi link penerima) -->
+    <div id="mainGeneratorWrapper">
+        <!-- HALAMAN 1: CINEMATIC LANDING PAGE -->
+        <div id="landingScreen" class="page-screen">
+            <div class="hero-card">
+                <div class="badge">✦ Atelier Card Studio</div>
+                <h1 class="hero-title">Bukan Sekadar Ucapan. <br>Ini <span>Karya Seni</span>.</h1>
+                <p class="hero-subtitle">Ciptakan kartu ucapan digital mewah dengan tipografi eksklusif dan tata letak minimalis modern dalam hitungan detik.</p>
+                <button id="startBtn" class="cta-button">Mulai Mendesain — Gratis</button>
+            </div>
+        </div>
+
+        <!-- HALAMAN 2: APP STUDIO (BENTO GRID INTERFACE) -->
+        <div id="appScreen" class="page-screen hidden">
+            <div class="studio-container">
+                <header class="studio-header">
+                    <button id="backBtn" class="back-btn">← Beranda</button>
+                    <div class="studio-logo">Atelier Studio</div>
+                    <button id="clearBtn" class="reset-btn" title="Kosongkan Semua Teks">Reset ↺</button>
+                </header>
+
+                <main class="studio-grid">
+                    <!-- PREVIEW PANEL -->
+                    <section class="preview-panel">
+                        <div id="cardCanvas" class="card-canvas theme-1 ratio-45">
+                            <div id="cardOverlay" class="card-overlay"></div>
+                            <div class="card-content">
+                                <p class="card-to">Untuk: <span id="cardToText">Kak Shinta</span></p>
+                                <p class="card-message" id="cardMessageText">Selamat Ulang Tahun! Semoga langkahmu ke depan selalu dipenuhi kebahagiaan, kesehatan, dan kedamaian. Terima kasih sudah menjadi sosok yang luar biasa selama ini.</p>
+                                <p class="card-from">Salam hangat, <span id="cardFromText">Adun</span></p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- PANEL KONTROL KIRI (BENTO STYLE) -->
+                    <section class="controls-panel">
+                        <div class="mobile-tabs">
+                            <button class="tab-link active" data-tab="tab-konten">📝 Konten</button>
+                            <button class="tab-link" data-tab="tab-gaya">🎨 Gaya & Efek</button>
+                        </div>
+
+                        <div id="tab-konten" class="tab-content active">
+                            <div class="bento-box">
+                                <div class="form-group">
+                                    <label>Nama Penerima</label>
+                                    <input type="text" id="toInput" placeholder="Contoh: Sang Kekasih" value="Kak Shinta">
+                                </div>
+                                <div class="form-group">
+                                    <label>Pesan Penuh Makna</label>
+                                    <textarea id="messageInput" rows="4" placeholder="Tulis ucapan tulusmu...">Selamat Ulang Tahun! Semoga langkahmu ke depan selalu dipenuhi kebahagiaan, kesehatan, dan kedamaian. Terima kasih sudah menjadi sosok yang luar biasa selama ini.</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nama Pengirim</label>
+                                    <input type="text" id="fromInput" placeholder="Contoh: Pengagum Rahasia" value="Adun">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="tab-gaya" class="tab-content">
+                            <div class="bento-box">
+                                <div class="form-group">
+                                    <div class="label-with-value">
+                                        <label>Ukuran Tulisan</label>
+                                        <span id="fontSizeVal">24px</span>
+                                    </div>
+                                    <input type="range" id="fontSizeSlider" min="16" max="40" value="24" class="modern-slider">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Format Ukuran Kartu</label>
+                                    <div class="ratio-selector">
+                                        <button class="ratio-btn active" data-ratio="ratio-45">Standard (4:5)</button>
+                                        <button class="ratio-btn" data-ratio="ratio-11">Feed IG (1:1)</button>
+                                        <button class="ratio-btn" data-ratio="ratio-916">Story / WA (9:16)</button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Tipografi Eksklusif</label>
+                                    <select id="fontSelector" class="custom-select">
+                                        <option value="'Playfair Display', serif">Elegan Klasik (Playfair)</option>
+                                        <option value="'Cormorant Garamond', serif">Eksklusif Puisi (Cormorant)</option>
+                                        <option value="'Great Vibes', cursive">Kemewahan Royal (Great Vibes)</option>
+                                        <option value="'Cinzel', serif">Kekaisaran Romawi (Cinzel)</option>
+                                        <option value="'Dancing Script', cursive">Tegak Bersambung (Dancing)</option>
+                                        <option value="'Montserrat', sans-serif">Modern Clean (Montserrat)</option>
+                                        <option value="'Poppins', sans-serif">Universal (Poppins)</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Efek Atmosfer (Tekstur & Seni)</label>
+                                    <select id="effectSelector" class="custom-select">
+                                        <option value="fx-none">Tanpa Efek Tambahan</option>
+                                        <option value="fx-grain">Luxury Grain Texture (Kertas Mahal)</option>
+                                        <option value="fx-snow">Atmospheric Falling Snow (Syahdu)</option>
+                                        <option value="fx-bokeh">Cinematic Light Bokeh (Mewah)</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Filter Pencahayaan & Kontras</label>
+                                    <select id="filterSelector" class="custom-select">
+                                        <option value="ft-none">Normal Lighting</option>
+                                        <option value="ft-highcontrast">High-Contrast Dark (Dramatis)</option>
+                                        <option value="ft-vintage">Warm Vintage (Estetik Klasik)</option>
+                                        <option value="ft-cyber">Cyberpunk Neon Glow</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Palet Warna Kurasi</label>
+                                    <div class="theme-selector">
+                                        <button class="theme-btn active" data-theme="theme-1" style="background:#1e293b; border-color:#dfba6b;"></button>
+                                        <button class="theme-btn" data-theme="theme-2" style="background:#fbcfe8;"></button>
+                                        <button class="theme-btn" data-theme="theme-3" style="background:#064e3b;"></button>
+                                        <button class="theme-btn" data-theme="theme-4" style="background:#fdfbf7;"></button>
+                                        <button class="theme-btn" data-theme="theme-5" style="background:#020617; border-color:#d946ef;"></button>
+                                        <button class="theme-btn" data-theme="theme-6" style="background:linear-gradient(45deg, #e11d48, #f59e0b);"></button>
+                                        <button class="theme-btn" data-theme="theme-7" style="background:#2b1810;"></button>
+                                        <button class="theme-btn" data-theme="theme-8" style="background:#4c1d95;"></button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group color-picker-group">
+                                    <label>Punya Warna Sendiri?</label>
+                                    <div class="color-picker-wrapper">
+                                        <input type="color" id="customColorBg" value="#0f172a">
+                                        <span>Pilih Warna Latar Kustom</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="action-bento">
+                            <button id="downloadBtn" class="premium-btn primary">Simpan Gambar 高画質</button>
+                            <button id="shareBtn" class="premium-btn secondary">Kirim Tautan Amplop 📲</button>
+                        </div>
+
+                        <div class="bento-box donation-box">
+                            <div class="donation-content">
+                                <span>☕ Suka dengan tool gratis ini?</span>
+                                <a href="https://sociabuzz.com/cadis77/tribe" target="_blank" class="donation-btn">Dukung Kreator</a>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div>
         </div>
     </div>
 
-    <div id="appScreen" class="page-screen hidden">
-        <div class="studio-container">
+    <!-- BARU 📲 HALAMAN KHUSUS PENERIMA KARTU (MODE AMPLOP INTERAKTIF) -->
+    <div id="recipientScreen" class="page-screen hidden">
+        <div class="recipient-container">
             
-            <header class="studio-header">
-                <button id="backBtn" class="back-btn">← Beranda</button>
-                <div class="studio-logo">Atelier Studio</div>
-                <button id="clearBtn" class="reset-btn" title="Kosongkan Semua Teks">Reset ↺</button>
-            </header>
+            <!-- TAMPILAN AMPLOP LUXURY -->
+            <div id="envelopeWrapper" class="envelope-wrapper">
+                <div class="envelope-card">
+                    <div class="envelope-seal">✦</div>
+                    <h2 class="envelope-title">Atelier Studio</h2>
+                    <div class="envelope-divider"></div>
+                    <p class="envelope-sub">Sebuah Pesan Eksklusif Menantimu</p>
+                    <p class="envelope-to-label">Untuk: <span id="envelopeToName">Nama Penerima</span></p>
+                    <button id="openEnvelopeBtn" class="open-envelope-btn">Buka Surat ✨</button>
+                </div>
+            </div>
 
-            <main class="studio-grid">
-                
-                <section class="preview-panel">
-                    <div id="cardCanvas" class="card-canvas theme-1 ratio-45">
-                        <div id="cardOverlay" class="card-overlay"></div>
-                        
-                        <div class="card-content">
-                            <p class="card-to">Untuk: <span id="cardToText">Kak Shinta</span></p>
-                            <p class="card-message" id="cardMessageText">Selamat Ulang Tahun! Semoga langkahmu ke depan selalu dipenuhi kebahagiaan, kesehatan, dan kedamaian. Terima kasih sudah menjadi sosok yang luar biasa selama ini.</p>
-                            <p class="card-from">Salam hangat, <span id="cardFromText">Adun</span></p>
-                        </div>
+            <!-- HASIL KARTU UTAMA YANG AKAN MUNCUL SETELAH AMPLOP DIBUKA -->
+            <div id="recipientCardContainer" class="recipient-card-container hidden-card">
+                <div id="recipientCard" class="card-canvas theme-1 ratio-45">
+                    <div id="recipientCardOverlay" class="card-overlay"></div>
+                    <div class="card-content">
+                        <p class="card-to">Untuk: <span id="recCardToText"></span></p>
+                        <p class="card-message" id="recCardMessageText"></p>
+                        <p class="card-from">Salam hangat, <span id="recCardFromText"></span></p>
                     </div>
-                </section>
+                </div>
+            </div>
 
-                <section class="controls-panel">
-                    
-                    <div class="mobile-tabs">
-                        <button class="tab-link active" data-tab="tab-konten">📝 Konten</button>
-                        <button class="tab-link" data-tab="tab-gaya">🎨 Gaya & Efek</button>
-                    </div>
+            <!-- TOMBOL BACK TO MAKER UNTUK PENERIMA -->
+            <div id="recipientCta" class="recipient-cta hidden-cta">
+                <a href="index.html" class="cta-button">Bikin Kartu Ucapanmu Sendiri ✦</a>
+            </div>
 
-                    <div id="tab-konten" class="tab-content active">
-                        <div class="bento-box">
-                            <div class="form-group">
-                                <label>Nama Penerima</label>
-                                <input type="text" id="toInput" placeholder="Contoh: Sang Kekasih" value="Kak Shinta">
-                            </div>
-                            <div class="form-group">
-                                <label>Pesan Penuh Makna</label>
-                                <textarea id="messageInput" rows="4" placeholder="Tulis ucapan tulusmu...">Selamat Ulang Tahun! Semoga langkahmu ke depan selalu dipenuhi kebahagiaan, kesehatan, dan kedamaian. Terima kasih sudah menjadi sosok yang luar biasa selama ini.</textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Nama Pengirim</label>
-                                <input type="text" id="fromInput" placeholder="Contoh: Pengagum Rahasia" value="Adun">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="tab-gaya" class="tab-content">
-                        <div class="bento-box">
-                            
-                            <div class="form-group">
-                                <div class="label-with-value">
-                                    <label>Ukuran Tulisan</label>
-                                    <span id="fontSizeVal">24px</span>
-                                </div>
-                                <input type="range" id="fontSizeSlider" min="16" max="40" value="24" class="modern-slider">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Format Ukuran Kartu</label>
-                                <div class="ratio-selector">
-                                    <button class="ratio-btn active" data-ratio="ratio-45">Standard (4:5)</button>
-                                    <button class="ratio-btn" data-ratio="ratio-11">Feed IG (1:1)</button>
-                                    <button class="ratio-btn" data-ratio="ratio-916">Story / WA (9:16)</button>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Tipografi Eksklusif</label>
-                                <select id="fontSelector" class="custom-select">
-                                    <option value="'Playfair Display', serif">Elegan Klasik (Playfair)</option>
-                                    <option value="'Cormorant Garamond', serif">Eksklusif Puisi (Cormorant)</option>
-                                    <option value="'Great Vibes', cursive">Kemewahan Royal (Great Vibes)</option>
-                                    <option value="'Cinzel', serif">Kekaisaran Romawi (Cinzel)</option>
-                                    <option value="'Dancing Script', cursive">Tegak Bersambung (Dancing)</option>
-                                    <option value="'Montserrat', sans-serif">Modern Clean (Montserrat)</option>
-                                    <option value="'Poppins', sans-serif">Universal (Poppins)</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Efek Atmosfer (Tekstur & Seni)</label>
-                                <select id="effectSelector" class="custom-select">
-                                    <option value="fx-none">Tanpa Efek Tambahan</option>
-                                    <option value="fx-grain">Luxury Grain Texture (Kertas Mahal)</option>
-                                    <option value="fx-snow">Atmospheric Falling Snow (Syahdu)</option>
-                                    <option value="fx-bokeh">Cinematic Light Bokeh (Mewah)</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Filter Pencahayaan & Kontras</label>
-                                <select id="filterSelector" class="custom-select">
-                                    <option value="ft-none">Normal Lighting</option>
-                                    <option value="ft-highcontrast">High-Contrast Dark (Dramatis)</option>
-                                    <option value="ft-vintage">Warm Vintage (Estetik Klasik)</option>
-                                    <option value="ft-cyber">Cyberpunk Neon Glow</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Palet Warna Kurasi</label>
-                                <div class="theme-selector">
-                                    <button class="theme-btn active" data-theme="theme-1" style="background:#1e293b; border-color:#dfba6b;"></button>
-                                    <button class="theme-btn" data-theme="theme-2" style="background:#fbcfe8;"></button>
-                                    <button class="theme-btn" data-theme="theme-3" style="background:#064e3b;"></button>
-                                    <button class="theme-btn" data-theme="theme-4" style="background:#fdfbf7;"></button>
-                                    <button class="theme-btn" data-theme="theme-5" style="background:#020617; border-color:#d946ef;"></button>
-                                    <button class="theme-btn" data-theme="theme-6" style="background:linear-gradient(45deg, #e11d48, #f59e0b);"></button>
-                                    <button class="theme-btn" data-theme="theme-7" style="background:#2b1810;"></button>
-                                    <button class="theme-btn" data-theme="theme-8" style="background:#4c1d95;"></button>
-                                </div>
-                            </div>
-
-                            <div class="form-group color-picker-group">
-                                <label>Punya Warna Sendiri?</label>
-                                <div class="color-picker-wrapper">
-                                    <input type="color" id="customColorBg" value="#0f172a">
-                                    <span>Pilih Warna Latar Kustom</span>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="action-bento">
-                        <button id="downloadBtn" class="premium-btn primary">Simpan Gambar 高画質</button>
-                        <button id="shareBtn" class="premium-btn secondary">Kirim Langsung 📲</button>
-                    </div>
-
-                    <div class="bento-box donation-box">
-                        <div class="donation-content">
-                            <span>☕ Suka dengan tool gratis ini?</span>
-                            <a href="https://sociabuzz.com/cadis77/tribe" target="_blank" class="donation-btn">Dukung Kreator</a>
-                        </div>
-                    </div>
-
-                </section>
-            </main>
         </div>
     </div>
 
+    <!-- Script Renderer -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
