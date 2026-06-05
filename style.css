@@ -1,257 +1,336 @@
-/* style.css v5.0 - Atelier Luxury Multi-View Setup */
+/* style.css v6.0 - Atelier Cyber Luxury & Bento System */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #070a12; /* Background gelap solid super premium */
-    color: #f3f4f6;
+    background-color: #030712;
+    color: #f9fafb;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    min-height: 100vh;
 }
 
-/* Utilitas untuk menyembunyikan halaman */
-.hidden {
-    display: none !important;
+.hidden { display: none !important; }
+
+/* AMBIENT MESH GRADIENT EFFECT (BIAR WEB TERLIHAT MAHAL) */
+.glow-bg {
+    position: fixed;
+    top: -20%; left: -10%;
+    width: 140vw; height: 140vh;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(217, 70, 239, 0.1) 0%, transparent 50%);
+    z-index: 0;
+    pointer-events: none;
 }
 
 /* ==========================================================================
-   STYLE HALAMAN 1: LANDING PAGE (SANGAT ELEGAN & SINEMATIK)
+   STYLE HALAMAN 1: LANDING PAGE (CINEMATIC LUXURY)
    ========================================================================== */
 #landingScreen {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-card {
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 4rem 3rem;
+    border-radius: 32px;
+    max-width: 750px;
     text-align: center;
-    padding: 2rem;
-    background: radial-gradient(circle at center, #111827 0%, #070a12 100%);
-    position: relative;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+    animation: scaleUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-#landingScreen::before {
-    content: '';
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    background: rgba(56, 189, 248, 0.08);
-    filter: blur(80px);
-    border-radius: 50%;
-    top: 20%;
-}
-
-.hero-container {
-    max-width: 650px;
-    position: relative;
-    z-index: 2;
-    animation: fadeIn 1s ease-out;
-}
-
-.hero-logo {
-    font-family: 'Cinzel', serif;
-    font-size: 1.1rem;
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    color: #94a3b8;
+.badge {
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #38bdf8;
     margin-bottom: 2rem;
 }
 
 .hero-title {
     font-family: 'Playfair Display', serif;
-    font-size: 3.2rem;
+    font-size: 3.5rem;
     font-weight: 400;
     line-height: 1.2;
-    color: #ffffff;
     margin-bottom: 1.5rem;
+    color: #fff;
+}
+
+.hero-title span {
+    font-style: italic;
+    background: linear-gradient(to right, #6366f1, #a855f7, #f43f5e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .hero-subtitle {
-    color: #94a3b8;
-    font-size: 1rem;
+    color: #9ca3af;
+    font-size: 1.05rem;
     font-weight: 300;
-    line-height: 1.7;
-    margin-bottom: 3rem;
-    padding: 0 1rem;
+    line-height: 1.8;
+    margin-bottom: 3.5rem;
+    max-width: 600px;
+    margin-left: auto; margin-right: auto;
 }
 
 .cta-button {
     background: #ffffff;
-    color: #070a12;
+    color: #030712;
     border: none;
-    padding: 1.2rem 2.5rem;
+    padding: 1.3rem 3rem;
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    border-radius: 40px;
+    letter-spacing: 1px;
+    border-radius: 100px;
     cursor: pointer;
-    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s;
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .cta-button:hover {
-    transform: translateY(-3px);
-    background-color: #f3f4f6;
-    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(255, 255, 255, 0.25);
+    background: #f3f4f6;
 }
 
 /* ==========================================================================
-   STYLE HALAMAN 2: APP STUDIO (EDITOR CARD)
+   STYLE HALAMAN 2: APP STUDIO (BENTO & BALANCED LAYOUT)
    ========================================================================== */
-.container {
-    max-width: 1100px;
+.studio-container {
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 1.5rem 1.5rem 3rem 1.5rem;
+    padding: 2rem 1.5rem;
+    position: relative;
+    z-index: 1;
 }
 
-.app-header {
+.studio-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 2.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    padding-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
-.back-btn {
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: #94a3b8;
-    padding: 0.5rem 1.2rem;
-    border-radius: 20px;
-    font-family: 'Montserrat', sans-serif;
+.back-btn, .reset-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #9ca3af;
+    padding: 0.6rem 1.2rem;
+    border-radius: 100px;
     font-size: 0.8rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
 }
+.back-btn:hover { color: #fff; border-color: #fff; }
+.reset-btn:hover { color: #f43f5e; border-color: #f43f5e; background: rgba(244,63,94,0.05); }
 
-.back-btn:hover {
-    color: #fff;
-    border-color: #fff;
-    background-color: rgba(255, 255, 255, 0.02);
-}
-
-.app-branding {
+.studio-logo {
     font-family: 'Cinzel', serif;
-    font-size: 0.9rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: #fff;
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+    font-weight: 700;
 }
 
-.app-grid {
+/* Grid Layout Seimbang ala Canva Desktop */
+.studio-grid {
     display: grid;
-    grid-template-columns: 1fr 1.1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 3rem;
     align-items: start;
-    animation: fadeIn 0.6s ease-out;
 }
 
+/* Komponen Bento Panel Input */
 .controls-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.mobile-tabs { display: none; } /* Hanya muncul di HP via Media Query */
+
+.bento-box {
     background: rgba(15, 23, 42, 0.4);
-    backdrop-filter: blur(12px);
-    padding: 2.5rem;
-    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 2.2rem;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
 .form-group {
-    margin-bottom: 1.8rem;
+    margin-bottom: 1.5rem;
 }
+.form-group:last-child { margin-bottom: 0; }
 
 .form-group label {
     display: block;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
+    color: #9ca3af;
     margin-bottom: 0.6rem;
-    color: #94a3b8;
 }
 
+.label-with-value {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.label-with-value span { font-size: 0.85rem; color: #38bdf8; font-weight: 600; }
+
+/* Input Fields Premium */
 input[type="text"], textarea, select {
     width: 100%;
     padding: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
+    border-radius: 14px;
+    background: rgba(3, 7, 18, 0.4);
+    color: #fff;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.9rem;
-    background-color: rgba(7, 10, 18, 0.5);
-    color: #fff;
-    transition: all 0.3s;
+}
+input[type="text"]:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
 }
 
-input[type="text"]:focus, textarea:focus, select:focus {
-    border-color: #38bdf8;
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+/* Modern Slider Customization */
+.modern-slider {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
     outline: none;
 }
+.modern-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #38bdf8;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(56,189,248,0.5);
+}
 
-.theme-selector {
+/* Ratio Selector Chips */
+.ratio-selector {
     display: flex;
     gap: 0.5rem;
+}
+.ratio-btn {
+    flex: 1;
+    padding: 0.8rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #9ca3af;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+}
+.ratio-btn.active, .ratio-btn:hover {
+    background: #fff; color: #030712; border-color: #fff;
+}
+
+/* Lingkaran Pilihan Warna Minimalis */
+.theme-selector {
+    display: flex;
+    gap: 0.6rem;
     flex-wrap: wrap;
 }
-
 .theme-btn {
-    padding: 0.55rem 1.1rem;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.02);
-    color: #cbd5e1;
-    border-radius: 30px;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 2px solid transparent;
     cursor: pointer;
-    font-size: 0.75rem;
-    font-weight: 500;
-    transition: all 0.2s;
+    transition: transform 0.2s;
+}
+.theme-btn.active {
+    transform: scale(1.2);
+    box-shadow: 0 0 12px rgba(255,255,255,0.4);
 }
 
-.theme-btn:hover, .theme-btn.active {
-    background-color: #fff;
-    color: #070a12;
-    border-color: #fff;
-    font-weight: 600;
+/* Custom Color Input */
+.color-picker-group {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 1.2rem;
+    margin-top: 1.2rem;
 }
+.color-picker-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+input[type="color"] {
+    -webkit-appearance: none;
+    border: none; width: 40px; height: 40px;
+    border-radius: 50%; overflow: hidden; cursor: pointer;
+    background: none;
+}
+input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+input[type="color"]::-webkit-color-swatch { border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; }
+.color-picker-wrapper span { font-size: 0.85rem; color: #9ca3af; }
 
-.button-group {
+/* Tombol Eksekusi Utama Bento Style */
+.action-bento {
     display: flex;
     gap: 1rem;
-    margin-top: 2.5rem;
 }
-
-.download-btn, .share-btn {
+.premium-btn {
     flex: 1;
-    padding: 1.1rem;
-    border: none;
-    border-radius: 12px;
+    padding: 1.2rem;
+    font-family: 'Montserrat', sans-serif;
     font-size: 0.85rem;
     font-weight: 600;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    border-radius: 16px;
+    border: none;
     cursor: pointer;
-    transition: all 0.2s;
 }
-
-.download-btn {
-    background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+.premium-btn.primary {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
     color: white;
+    box-shadow: 0 10px 20px rgba(99,102,241,0.2);
 }
-.download-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(56, 189, 248, 0.25); }
+.premium-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(99,102,241,0.3); }
 
-.share-btn {
-    background-color: transparent;
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+.premium-btn.secondary {
+    background: rgba(255,255,255,0.04);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.1);
 }
-.share-btn:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-color: #fff;
-}
+.premium-btn.secondary:hover { background: rgba(255,255,255,0.08); border-color: #fff; }
 
-/* Preview Area */
+/* ==========================================================================
+   PREVIEW PANEL & RENDER KANVAS (PREMIUM REALISM SHADOW)
+   ========================================================================== */
 .preview-panel {
     display: flex;
     justify-content: center;
@@ -261,95 +340,122 @@ input[type="text"]:focus, textarea:focus, select:focus {
 
 .card-canvas {
     width: 100%;
-    max-width: 420px;
-    aspect-ratio: 4/5;
+    max-width: 410px;
+    aspect-ratio: 4/5; /* Rasio Default */
     border-radius: 24px;
-    padding: 3.5rem;
+    padding: 3rem;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+    overflow: hidden;
 }
 
+/* Rasio Dinamis */
+.card-canvas.ratio-11 { aspect-ratio: 1/1 !important; }
+.card-canvas.ratio-916 { aspect-ratio: 9/16 !important; padding: 4rem 2.5rem !important; }
+
+/* Serat Kertas Premium Fisik */
 .card-canvas::before {
     content: '';
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
     background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
-    opacity: 0.15;
+    opacity: 0.12;
     pointer-events: none;
 }
 
-.card-content {
-    position: relative;
-    text-align: center;
-    width: 100%;
-}
+.card-content { position: relative; text-align: center; width: 100%; }
+.card-to, .card-from { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; font-weight: 400; text-transform: uppercase; letter-spacing: 3px; }
+.card-message { font-size: 24px; line-height: 1.6; margin: 2.5rem 0; font-weight: 400; word-wrap: break-word; }
 
-.card-to, .card-from {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-}
+/* 10 ATELIER HARDCODED THEMES (ANTI-GLITCH HTML2CANVAS) */
+.card-canvas.theme-1 { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #ffffff; border: 1px solid #334155; }
+.theme-1 span { color: #dfba6b; }
 
-.card-message {
-    font-size: 1.55rem;
-    line-height: 1.6;
-    margin: 2.5rem 0;
-    font-weight: 400;
-    word-wrap: break-word;
+.card-canvas.theme-2 { background: linear-gradient(135deg, #fbcfe8 0%, #f3e8ff 100%); color: #4a3728; }
+.theme-2 span { color: #c94a6a; }
+
+.card-canvas.theme-3 { background: linear-gradient(135deg, #064e3b 0%, #047857 100%); color: #f8fafc; }
+.theme-3 span { color: #fde047; }
+
+.card-canvas.theme-4 { background: #fdfbf7; color: #2c3e50; border: 1px solid #ebd9c8; }
+.theme-4 span { color: #7c3aed; }
+
+.card-canvas.theme-5 { background: #020617; color: #ffffff; border: 2px solid #d946ef; }
+.theme-5 span { color: #22d3ee; }
+
+.card-canvas.theme-6 { background: linear-gradient(135deg, #e11d48 0%, #f59e0b 100%); color: #ffffff; }
+.theme-6 span { color: #111111; }
+
+.card-canvas.theme-7 { background: linear-gradient(135deg, #2b1810 0%, #4a2c11 100%); color: #f5f5f4; border: 1px solid #5c3a21; }
+.theme-7 span { color: #f59e0b; }
+
+.card-canvas.theme-8 { background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%); color: #ffffff; }
+.theme-8 span { color: #a7f3d0; }
+
+.card-canvas.theme-9 { background-color: #faf8f5; color: #2b2b2b; background-image: radial-gradient(#dcd6cd 12%, transparent 13%); background-size: 24px 24px; border: 1px solid #e2dacd; }
+.theme-9 span { color: #ff6b6b; }
+
+.card-canvas.theme-10 { background: repeating-linear-gradient(45deg, #111827, #111827 10px, #1f2937 10px, #1f2937 20px); color: #ffffff; border: 1px solid #374151; }
+.theme-10 span { color: #38bdf8; }
+
+/* KEYFRAMES ANIMASI */
+@keyframes scaleUp {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
 }
 
 /* ==========================================================================
-   10 TEMA DAN MOTIF PREMIUM (Eksplisit tanpa CSS variables agar anti-glitch)
+   OPTIMASI MOBILE LAYOUT (SISTEM STICKY & TABS AGAR TIDAK BERANTAKAN)
    ========================================================================== */
-.card-canvas.theme-1 { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #ffffff; border: 1px solid #334155; }
-.theme-1 .card-to span, .theme-1 .card-from span { color: #dfba6b; }
-
-.card-canvas.theme-2 { background: linear-gradient(135deg, #fbcfe8 0%, #f3e8ff 100%); color: #4a3728; }
-.theme-2 .card-to span, .theme-2 .card-from span { color: #c94a6a; }
-
-.card-canvas.theme-3 { background: linear-gradient(135deg, #064e3b 0%, #047857 100%); color: #f8fafc; }
-.theme-3 .card-to span, .theme-3 .card-from span { color: #fde047; }
-
-.card-canvas.theme-4 { background: #fdfbf7; color: #2c3e50; border: 1px solid #ebd9c8; }
-.theme-4 .card-to span, .theme-4 .card-from span { color: #7c3aed; }
-
-.card-canvas.theme-5 { background: #020617; color: #ffffff; border: 2px solid #d946ef; }
-.theme-5 .card-to span, .theme-5 .card-from span { color: #22d3ee; text-shadow: 0 0 8px rgba(34, 211, 238, 0.5); }
-
-.card-canvas.theme-6 { background: linear-gradient(135deg, #e11d48 0%, #f59e0b 100%); color: #ffffff; }
-.theme-6 .card-to span, .theme-6 .card-from span { color: #111111; }
-
-.card-canvas.theme-7 { background: linear-gradient(135deg, #2b1810 0%, #4a2c11 100%); color: #f5f5f4; border: 1px solid #5c3a21; }
-.theme-7 .card-to span, .theme-7 .card-from span { color: #f59e0b; }
-
-.card-canvas.theme-8 { background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%); color: #ffffff; }
-.theme-8 .card-to span, .theme-8 .card-from span { color: #a7f3d0; }
-
-.card-canvas.theme-9 { background-color: #faf8f5; color: #2b2b2b; background-image: radial-gradient(#dcd6cd 12%, transparent 13%); background-size: 24px 24px; border: 1px solid #e2dacd; }
-.theme-9 .card-to span, .theme-9 .card-from span { color: #ff6b6b; }
-
-.card-canvas.theme-10 { background: repeating-linear-gradient(45deg, #111827, #111827 10px, #1f2937 10px, #1f2937 20px); color: #ffffff; border: 1px solid #374151; }
-.theme-10 .card-to span, .theme-10 .card-from span { color: #38bdf8; }
-
-/* Animasi Fade In */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsive Mobile Layout (Rapih, Tidak Padat Lagi) */
 @media (max-width: 768px) {
+    #landingScreen { padding: 1rem; }
+    .hero-card { padding: 2.5rem 1.5rem; border-radius: 24px; }
     .hero-title { font-size: 2.2rem; }
-    .hero-subtitle { font-size: 0.9rem; }
-    .container { padding: 1rem; }
-    .app-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .controls-panel { padding: 1.5rem; border-radius: 16px; }
-    .preview-panel { position: relative; top: 0; }
-    .card-canvas { padding: 2.5rem; border-radius: 16px; }
-    .card-message { font-size: 1.25rem; }
+    
+    .studio-container { padding: 1rem; }
+    
+    /* Grid diubah jadi satu kolom vertikal */
+    .studio-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    
+    /* Preview Kartu nempel di atas agar user tahu perubahan teks secara real-time */
+    .preview-panel {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #030712;
+        padding: 0.5rem 0 1rem 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .card-canvas { max-width: 320px; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
+    
+    /* Navigasi Tab Aktif di HP */
+    .mobile-tabs {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .tab-link {
+        flex: 1;
+        padding: 0.8rem;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        color: #9ca3af;
+        border-radius: 12px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    .tab-link.active {
+        background: #6366f1; color: #fff; border-color: #6366f1;
+    }
+    
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    
+    .bento-box { padding: 1.5rem; border-radius: 20px; }
+    .action-bento { flex-direction: column; gap: 0.8rem; }
 }
