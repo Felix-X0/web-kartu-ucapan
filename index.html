@@ -3,74 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pembuat Kartu Ucapan Estetik v2.0</title>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@1,500&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <title>Premium Greeting Card Generator v3.0</title>
+    <!-- Google Fonts Premium Pack -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Cinzel:wght@500;700&family=Dancing+Script:wght@600&family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@1,500&family=Poppins:wght@300;400;500&family=Sacramento&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="container">
         <header>
-            <h1>Pembuat Kartu Ucapan Digital</h1>
-            <p>Bikin ucapan estetik dalam 10 detik. Tanpa login, tanpa ribet.</p>
+            <h1>Atelier Card</h1>
+            <p>Buat kartu ucapan personal dengan estetika minimalis dan mewah.</p>
         </header>
 
         <main class="app-grid">
+            <!-- AREA KIRI: FORM CONTROL (SIMPEL & BERSIH) -->
             <section class="controls-panel">
                 <div class="form-group">
-                    <label>Untuk Siapa?</label>
-                    <input type="text" id="toInput" placeholder="Contoh: Kak Shinta" value="Kak Shinta">
+                    <label>Penerima</label>
+                    <input type="text" id="toInput" placeholder="Nama penerima..." value="Kak Shinta">
                 </div>
                 
                 <div class="form-group">
-                    <label>Tulis Pesanmu</label>
-                    <textarea id="messageInput" rows="4" placeholder="Tulis ucapan kamu di sini...">Selamat Ulang Tahun yang ke-25! Semoga makin sukses, sehat selalu, dan semua impianmu tercapai. Bahagia terus ya!</textarea>
+                    <label>Pesan Ucapan</label>
+                    <textarea id="messageInput" rows="5" placeholder="Tulis pesan penuh makna di sini...">Selamat Ulang Tahun! Semoga langkahmu ke depan selalu dipenuhi kebahagiaan, kesehatan, dan kedamaian. Terima kasih sudah menjadi sosok yang luar biasa.</textarea>
                 </div>
 
                 <div class="form-group">
-                    <label>Dari Siapa?</label>
-                    <input type="text" id="fromInput" placeholder="Contoh: Adun" value="Adun">
+                    <label>Pengirim</label>
+                    <input type="text" id="fromInput" placeholder="Nama pengirim..." value="Adun">
                 </div>
 
+                <!-- 8 PILIHAN FONT PREMIUM -->
                 <div class="form-group">
-                    <label>Pilih Gaya Tulisan</label>
+                    <label>Gaya Tipografi (Font)</label>
                     <select id="fontSelector">
-                        <option value="'Playfair Display', serif">Elegan (Playfair)</option>
+                        <option value="'Playfair Display', serif">Elegan Klasik (Playfair)</option>
+                        <option value="'Great Vibes', cursive">Kemewahan Royal (Great Vibes)</option>
+                        <option value="'Cinzel', serif">Kekaisaran Romawi (Cinzel)</option>
                         <option value="'Dancing Script', cursive">Tegak Bersambung (Dancing)</option>
-                        <option value="'Caveat', cursive">Tulisan Tangan (Caveat)</option>
-                        <option value="'Poppins', sans-serif">Modern (Poppins)</option>
+                        <option value="'Caveat', cursive">Tulisan Tangan Casual (Caveat)</option>
+                        <option value="'Sacramento', cursive">Minimalis Estetik (Sacramento)</option>
+                        <option value="'Montserrat', sans-serif">Modern Clean (Montserrat)</option>
+                        <option value="'Poppins', sans-serif">Universal (Poppins)</option>
                     </select>
                 </div>
 
+                <!-- 7 PILIHAN TEMA LUXURY & MOTIF -->
                 <div class="form-group">
-                    <label>Pilih Tema & Motif</label>
+                    <label>Palet Warna & Motif</label>
                     <div class="theme-selector">
-                        <button class="theme-btn active" data-theme="theme-1">Midnight Blue</button>
-                        <button class="theme-btn" data-theme="theme-2">Romantic Pink</button>
-                        <button class="theme-btn" data-theme="theme-3">Forest Green</button>
-                        <button class="theme-btn" data-theme="theme-4">Polkadot Ceria</button>
-                        <button class="theme-btn" data-theme="theme-5">Garis Estetik</button>
+                        <button class="theme-btn active" data-theme="theme-1" title="Midnight Gold">Midnight Gold</button>
+                        <button class="theme-btn" data-theme="theme-2" title="Blush Rose">Blush Rose</button>
+                        <button class="theme-btn" data-theme="theme-3" title="Emerald Sage">Emerald Sage</button>
+                        <button class="theme-btn" data-theme="theme-4" title="Ivory Marble">Ivory Marble</button>
+                        <button class="theme-btn" data-theme="theme-5" title="Warm Sunset">Warm Sunset</button>
+                        <button class="theme-btn" data-theme="theme-6" title="Polkadot Ceria">Polkadot</button>
+                        <button class="theme-btn" data-theme="theme-7" title="Garis Estetik">Line Art</button>
                     </div>
                 </div>
 
+                <!-- ACTION BUTTONS -->
                 <div class="button-group">
-                    <button id="downloadBtn" class="download-btn">Download Gambar</button>
+                    <button id="downloadBtn" class="download-btn">Simpan Gambar</button>
                     <button id="shareBtn" class="share-btn">Kirim Langsung 📲</button>
                 </div>
             </section>
 
+            <!-- AREA KANAN: PREVIEW KARTU MEWAH -->
             <section class="preview-panel">
                 <div id="cardCanvas" class="card-canvas theme-1">
                     <div class="card-content">
-                        <p class="card-to">Dear, <span id="cardToText">Kak Shinta</span></p>
-                        <p class="card-message" id="cardMessageText">Selamat Ulang Tahun yang ke-25! Semoga makin sukses, sehat selalu, dan semua impianmu tercapai. Bahagia terus ya!</p>
-                        <p class="card-from">From: <span id="cardFromText">Adun</span></p>
+                        <p class="card-to">To: <span id="cardToText">Kak Shinta</span></p>
+                        <p class="card-message" id="cardMessageText">Selamat Ulang Tahun! Semoga langkahmu ke depan selalu dipenuhi kebahagiaan, kesehatan, dan kedamaian. Terima kasih sudah menjadi sosok yang luar biasa.</p>
+                        <p class="card-from">Warm regards, <span id="cardFromText">Adun</span></p>
                     </div>
                 </div>
             </section>
         </main>
     </div>
 
+    <!-- Script Renderer -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
