@@ -2,111 +2,110 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atelier AI Studio | Master Edition</title>
-    <!-- GOOGLE VERIFICATION (TERPASANG) -->
-    <meta name="google-site-verification" content="eikd6Rzc695Y7uJtpPKJFB6zgb-V08adih6jovwYE6M" />
-    
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&family=Playfair+Display&family=Poppins&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    
+    <title>Atelier Studio | Interactive Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #131314; --surface: #1e1f20; --text: #e3e3e3; --accent: #a8c7fa; }
-        * { box-sizing: border-box; font-family: 'Google Sans', sans-serif; }
-        body { background: var(--bg); color: var(--text); margin: 0; display: flex; justify-content: center; min-height: 100vh; }
+        :root { --bg: #0a0a0a; }
+        body { margin: 0; background: var(--bg); font-family: 'Poppins', sans-serif; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; }
 
-        /* UI LAYOUT */
-        .app-container { width: 100%; max-width: 500px; padding: 20px; }
-        .chat-bubble { background: var(--surface); padding: 20px; border-radius: 20px; margin-bottom: 15px; animation: fadeIn 0.5s; }
-        
-        /* CARD STYLES */
-        #cardCanvas { width: 100%; aspect-ratio: 4/5; border-radius: 25px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px; transition: 0.8s; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .theme-luxury { background: #0a0a0a; border: 2px solid #c5a059; color: #c5a059; }
-        .theme-cyber { background: #050505; border: 2px solid #00ffcc; color: #00ffcc; animation: pulse 2s infinite; }
-        .theme-anime { background: #fff; border: 4px solid #000; color: #000; }
-        .theme-floral { background: #fff0f5; border: 2px solid #ff80ab; color: #5d4037; }
-        .theme-kartun { background: #ffe066; border: 3px solid #4a90e2; color: #2b2b2b; }
+        /* Welcome Screen */
+        #welcome { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s; }
+        .btn-open { padding: 20px 40px; background: #c5a059; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 1.2em; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
-        @keyframes pulse { 0% { box-shadow: 0 0 10px #00ffcc; } 50% { box-shadow: 0 0 30px #ff00ff; } }
+        /* Animasi Tema */
+        @keyframes cyber-glow { 0%, 100% { box-shadow: 0 0 20px #00ffcc; } 50% { box-shadow: 0 0 50px #ff00ff; } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        @keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
-        /* INPUTS */
-        .prompt-area { background: var(--surface); padding: 15px; border-radius: 30px; margin-top: 20px; }
-        input, textarea, select { width: 100%; background: transparent; border: none; color: white; padding: 10px; outline: none; }
-        button { background: var(--accent); color: black; border: none; padding: 12px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-top: 5px; }
+        .theme-cyber { animation: cyber-glow 2s infinite; border: 2px solid #00ffcc; }
+        .theme-anime { animation: float 3s infinite ease-in-out; border: 2px solid #fff; }
+        .theme-kartun { animation: bounce 2s infinite; border: 4px solid #4a90e2; }
+
+        /* Kartu */
+        .card { width: 300px; aspect-ratio: 3/4; padding: 40px; text-align: center; border-radius: 30px; display: flex; flex-direction: column; justify-content: center; transition: 0.5s; background: #111; }
+        .hidden { display: none; }
+        .editor { width: 300px; margin-top: 20px; background: #1a1a1a; padding: 20px; border-radius: 20px; }
+        input, textarea, select { width: 100%; padding: 10px; margin: 5px 0; background: #333; border: none; color: #fff; border-radius: 5px; }
     </style>
 </head>
 <body>
 
-<div class="app-container" id="chat-flow">
-    <!-- GREETING -->
-    <div class="chat-bubble" id="welcome">
-        Halo! Saya Atelier AI. Saya siap membantu membuatkan kartu ucapan yang sangat estetis untukmu. Siap untuk memulai?
-        <br><br><button onclick="startApp()">Mulai Buat Kartu</button>
+    <!-- WELCOME SCREEN -->
+    <div id="welcome">
+        <h1>Atelier Studio</h1>
+        <p>Ada pesan spesial untukmu...</p>
+        <button class="btn-open" onclick="openCard()">Buka Kartu 💌</button>
     </div>
 
-    <!-- EDITOR (HIDDEN AT FIRST) -->
-    <div id="editor" style="display:none;">
-        <div id="cardCanvas" class="theme-luxury">
-            <p id="cardTo" style="font-size: 1.1em;">Untuk: ...</p>
-            <h1 id="cardMsg" style="font-size: 2em; margin: 20px 0;">...</h1>
-            <p id="cardFrom" style="font-style: italic;">Dari: ...</p>
+    <!-- APP CONTENT -->
+    <div id="app" class="hidden">
+        <div id="cardCanvas" class="card theme-luxury">
+            <h2 id="cardTo">Untuk: ...</h2>
+            <p id="cardMsg" style="font-size: 1.5em; margin: 20px 0;">...</p>
+            <p id="cardFrom">Dari: ...</p>
         </div>
 
-        <div class="prompt-area">
-            <input type="text" id="toIn" placeholder="Penerima..." oninput="update()">
-            <textarea id="msgIn" placeholder="Pesan..." oninput="update()"></textarea>
-            <input type="text" id="fromIn" placeholder="Pengirim..." oninput="update()">
+        <div id="controls" class="editor">
+            <input type="text" id="toIn" placeholder="Penerima...">
+            <textarea id="msgIn" placeholder="Pesan..."></textarea>
+            <input type="text" id="fromIn" placeholder="Pengirim...">
             <select id="themeSel" onchange="update()">
                 <option value="theme-luxury">Luxury Gold</option>
-                <option value="theme-cyber">Cyber Neon</option>
-                <option value="theme-floral">Floral Soft</option>
-                <option value="theme-anime">Anime Style</option>
-                <option value="theme-kartun">Cartoon Fun</option>
+                <option value="theme-cyber">Cyber Neon (Animasi)</option>
+                <option value="theme-anime">Anime (Animasi)</option>
+                <option value="theme-kartun">Cartoon (Animasi)</option>
             </select>
-            <button onclick="download4K()">Simpan 4K HD</button>
-            <button onclick="shareLink()" style="background:#555; color:white;">Salin Link</button>
+            <button onclick="shareLink()" style="width:100%; padding:10px; margin-top:10px;">Salin Link Kartu</button>
         </div>
     </div>
-</div>
 
-<script>
-    function startApp() {
-        document.getElementById('welcome').style.display = 'none';
-        document.getElementById('editor').style.display = 'block';
-    }
-
-    function update() {
-        document.getElementById('cardTo').textContent = "Untuk: " + (document.getElementById('toIn').value || "...");
-        document.getElementById('cardMsg').textContent = document.getElementById('msgIn').value || "...";
-        document.getElementById('cardFrom').textContent = "Dari: " + (document.getElementById('fromIn').value || "...");
-        document.getElementById('cardCanvas').className = document.getElementById('themeSel').value;
-    }
-
-    function download4K() {
-        html2canvas(document.getElementById('cardCanvas'), { scale: 4 }).then(c => {
-            const link = document.createElement('a');
-            link.download = 'Atelier-Masterpiece.png';
-            link.href = c.toDataURL('image/png', 1.0);
-            link.click();
-        });
-    }
-
-    function shareLink() {
-        const d = btoa(JSON.stringify({t:document.getElementById('toIn').value, m:document.getElementById('msgIn').value, f:document.getElementById('fromIn').value, th:document.getElementById('themeSel').value}));
-        navigator.clipboard.writeText(window.location.origin + window.location.pathname + "?data=" + d);
-        alert("Link unik disalin!");
-    }
-
-    window.onload = () => {
-        const p = new URLSearchParams(window.location.search);
-        if (p.has('data')) {
-            const d = JSON.parse(atob(p.get('data')));
-            document.getElementById('toIn').value = d.t; document.getElementById('msgIn').value = d.m; document.getElementById('fromIn').value = d.f; document.getElementById('themeSel').value = d.th;
-            startApp();
-            update();
+    <script>
+        // Logika Buka Kartu
+        function openCard() {
+            document.getElementById('welcome').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('welcome').style.display = 'none';
+                document.getElementById('app').classList.remove('hidden');
+            }, 800);
         }
-    };
-</script>
+
+        // Update Tampilan
+        function update() {
+            document.getElementById('cardTo').textContent = "Untuk: " + document.getElementById('toIn').value;
+            document.getElementById('cardMsg').textContent = document.getElementById('msgIn').value;
+            document.getElementById('cardFrom').textContent = "Dari: " + document.getElementById('fromIn').value;
+            document.getElementById('cardCanvas').className = 'card ' + document.getElementById('themeSel').value;
+        }
+
+        // Share Link
+        function shareLink() {
+            const data = btoa(JSON.stringify({
+                t: document.getElementById('toIn').value,
+                m: document.getElementById('msgIn').value,
+                f: document.getElementById('fromIn').value,
+                th: document.getElementById('themeSel').value
+            }));
+            navigator.clipboard.writeText(window.location.origin + window.location.pathname + "?data=" + data);
+            alert("Link sudah dicopy!");
+        }
+
+        // Load Data Otomatis
+        window.onload = () => {
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('data')) {
+                const d = JSON.parse(atob(params.get('data')));
+                document.getElementById('toIn').value = d.t;
+                document.getElementById('msgIn').value = d.m;
+                document.getElementById('fromIn').value = d.f;
+                document.getElementById('themeSel').value = d.th;
+                document.getElementById('controls').style.display = 'none'; // Sembunyikan editor untuk penerima
+                update();
+            }
+        };
+        
+        // Listener
+        [document.getElementById('toIn'), document.getElementById('msgIn'), document.getElementById('fromIn')]
+        .forEach(el => el.addEventListener('input', update));
+    </script>
 </body>
 </html>
