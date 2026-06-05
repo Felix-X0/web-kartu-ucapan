@@ -1,23 +1,18 @@
-/* style.css */
-
-/* Definisikan Tema & Variabel Dasar */
 :root {
     --bg-color: #f4f6f9;
     --text-primary: #2c3e50;
     --panel-bg: #ffffff;
     --accent-color: #3498db;
     
-    /* Font yang berbeda untuk konten kartu */
     --font-heading: 'Poppins', sans-serif;
-    --font-card: 'Playfair Display', serif; /* Font estetik untuk kartu */
+    --font-card: 'Playfair Display', serif;
 
-    /* Warna Default Tema Kartu (Midnight Blue) */
+    /* Tema Bawaan */
     --card-bg-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     --card-text-color: #ffffff;
-    --card-accent-color: #f1c40f; /* Kuning emas */
+    --card-accent-color: #f1c40f;
 }
 
-/* Reset Dasar */
 * {
     margin: 0;
     padding: 0;
@@ -44,7 +39,6 @@ header {
 
 header h1 {
     font-size: 2.5rem;
-    color: var(--text-primary);
     margin-bottom: 0.5rem;
 }
 
@@ -53,15 +47,13 @@ header p {
     font-weight: 300;
 }
 
-/* Layout Grid Utama */
 .app-grid {
     display: grid;
-    grid-template-columns: 1fr 1.5fr;
+    grid-template-columns: 1fr 1.2fr;
     gap: 2rem;
     align-items: start;
 }
 
-/* PANEL KONTROL (KIRI) */
 .controls-panel {
     background-color: var(--panel-bg);
     padding: 2rem;
@@ -77,25 +69,22 @@ header p {
     display: block;
     font-weight: 500;
     margin-bottom: 0.5rem;
-    color: var(--text-primary);
 }
 
-input[type="text"], textarea {
+input[type="text"], textarea, select {
     width: 100%;
     padding: 0.8rem;
     border: 2px solid #e0e6ed;
     border-radius: 8px;
     font-family: 'Poppins', sans-serif;
     font-size: 0.95rem;
-    transition: border-color 0.3s;
 }
 
-input[type="text"]:focus, textarea:focus {
+input[type="text"]:focus, textarea:focus, select:focus {
     border-color: var(--accent-color);
     outline: none;
 }
 
-/* Selector Tema */
 .theme-selector {
     display: flex;
     gap: 0.5rem;
@@ -123,30 +112,43 @@ input[type="text"]:focus, textarea:focus {
     border-color: var(--accent-color);
 }
 
-/* Tombol Download */
-.download-btn {
-    width: 100%;
+/* Grouping Tombol Baru */
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.download-btn, .share-btn {
+    flex: 1;
     padding: 1rem;
-    background-color: #2ecc71; /* Hijau sukses */
-    color: white;
     border: none;
     border-radius: 10px;
-    font-size: 1.1rem;
+    font-size: 1fr;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.1s;
-    margin-top: 1rem;
+    transition: all 0.3s;
+    text-align: center;
 }
 
-.download-btn:hover {
-    background-color: #27ae60;
+.download-btn {
+    background-color: #2ecc71;
+    color: white;
 }
 
-.download-btn:active {
+.download-btn:hover { background-color: #27ae60; }
+
+.share-btn {
+    background-color: #3498db;
+    color: white;
+}
+
+.share-btn:hover { background-color: #2980b9; }
+
+.download-btn:active, .share-btn:active {
     transform: translateY(2px);
 }
 
-/* PANEL PREVIEW (KANAN) */
 .preview-panel {
     display: flex;
     justify-content: center;
@@ -154,48 +156,42 @@ input[type="text"]:focus, textarea:focus {
     top: 2rem;
 }
 
-/* KANVAS KARTU (INI YANG AKAN DI-DOWNLOAD) */
 .card-canvas {
     width: 100%;
-    max-width: 500px;
-    aspect-ratio: 4/5; /* Rasio potret yang estetik */
+    max-width: 450px;
+    aspect-ratio: 4/5;
     border-radius: 20px;
-    padding: 3rem;
+    padding: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     overflow: hidden;
     box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-    transition: background 0.5s ease; /* Transisi warna tema */
+    transition: all 0.5s ease;
 }
 
-/* Overlay Estetik (biar ada vibe estetik di atas background) */
 .card-canvas::before {
     content: '';
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
-    background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png'); /* Tekstur kertas kertas */
-    opacity: 0.3;
+    background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+    opacity: 0.2;
+    pointer-events: none;
 }
 
-/* Konten di dalam kartu */
 .card-content {
     position: relative;
     text-align: center;
     width: 100%;
     color: var(--card-text-color);
-    transition: color 0.5s ease;
 }
 
-/* Desain Font Khusus Kartu */
 .card-to, .card-from {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 300;
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-bottom: 1rem;
-    opacity: 0.9;
 }
 
 .card-to span, .card-from span {
@@ -206,20 +202,14 @@ input[type="text"]:focus, textarea:focus {
 .card-message {
     font-family: var(--font-card);
     font-style: italic;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     line-height: 1.4;
     margin: 2rem 0;
     font-weight: 500;
+    word-wrap: break-word;
 }
 
-.card-from {
-    margin-top: 1.5rem;
-    margin-bottom: 0;
-}
-
-/* TEMA-TEMA KARTU (Mengubah Variabel CSS Kartu) */
-
-/* Tema 1: Midnight Blue (Bawaan) */
+/* DAFTAR TEMA & MOTIF BERGAYA */
 .card-canvas.theme-1 {
     --card-bg-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     --card-text-color: #ffffff;
@@ -227,15 +217,13 @@ input[type="text"]:focus, textarea:focus {
     background: var(--card-bg-gradient);
 }
 
-/* Tema 2: Romantic Pink */
 .card-canvas.theme-2 {
     --card-bg-gradient: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-    --card-text-color: #5d4037; /* Warna cokelat tua hangat */
-    --card-accent-color: #e91e63; /* Pink tua */
+    --card-text-color: #5d4037;
+    --card-accent-color: #e91e63;
     background: var(--card-bg-gradient);
 }
 
-/* Tema 3: Forest Green */
 .card-canvas.theme-3 {
     --card-bg-gradient: linear-gradient(135deg, #134e5e 0%, #71b280 100%);
     --card-text-color: #ffffff;
@@ -243,23 +231,31 @@ input[type="text"]:focus, textarea:focus {
     background: var(--card-bg-gradient);
 }
 
-/* Responsif untuk Layar HP */
+/* Motif 4: Polkadot Ceria */
+.card-canvas.theme-4 {
+    --card-text-color: #2c3e50;
+    --card-accent-color: #e74c3c;
+    background-color: #fdf5e6;
+    background-image: radial-gradient(#e74c3c 15%, transparent 16%), radial-gradient(#e74c3c 15%, transparent 16%);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+}
+
+/* Motif 5: Garis Miring Estetik */
+.card-canvas.theme-5 {
+    --card-text-color: #ecf0f1;
+    --card-accent-color: #f1c40f;
+    background: repeating-linear-gradient(
+        45deg,
+        #2c3e50,
+        #2c3e50 15px,
+        #34495e 15px,
+        #34495e 30px
+    );
+}
+
 @media (max-width: 768px) {
-    .app-grid {
-        grid-template-columns: 1fr; /* Tumpuk ke bawah */
-    }
-    
-    .preview-panel {
-        position: relative;
-        top: 0;
-        margin-bottom: 2rem;
-    }
-    
-    .card-canvas {
-        padding: 2rem;
-    }
-    
-    .card-message {
-        font-size: 1.4rem;
-    }
+    .app-grid { grid-template-columns: 1fr; }
+    .preview-panel { position: relative; top: 0; }
+    .card-message { font-size: 1.3rem; }
 }
