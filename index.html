@@ -3,92 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atelier Card Premium v4.0</title>
-    <!-- Google Fonts Mega Pack (10 Font Pilihan) -->
+    <title>Atelier Card Premium v5.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@1,500&family=Dancing+Script:wght@600&family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Parisienne&family=Playfair+Display:ital,wght@1,500&family=Poppins:wght@300;400;500&family=Sacramento&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>Atelier Card</h1>
-            <p>Buat kartu ucapan personal dengan estetika kekinian, mewah, dan instan.</p>
-        </header>
-
-        <main class="app-grid">
-            <!-- AREA KIRI: FORM CONTROL (MODERN DARK INTERFACE) -->
-            <section class="controls-panel">
-                <div class="form-group">
-                    <label>Penerima</label>
-                    <input type="text" id="toInput" placeholder="Nama penerima..." value="Kak Shinta">
-                </div>
-                
-                <div class="form-group">
-                    <label>Pesan Ucapan</label>
-                    <textarea id="messageInput" rows="5" placeholder="Tulis pesan penuh makna di sini...">Selamat Ulang Tahun! Semoga langkahmu ke depan selalu dipenuhi kebahagiaan, kesehatan, dan kedamaian. Terima kasih sudah menjadi sosok yang luar biasa selama ini.</textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Pengirim</label>
-                    <input type="text" id="fromInput" placeholder="Nama pengirim..." value="Adun">
-                </div>
-
-                <!-- 10 PILIHAN FONT -->
-                <div class="form-group">
-                    <label>Gaya Tulisan (Font)</label>
-                    <select id="fontSelector">
-                        <option value="'Playfair Display', serif">Elegan Klasik (Playfair)</option>
-                        <option value="'Great Vibes', cursive">Kemewahan Royal (Great Vibes)</option>
-                        <option value="'Cinzel', serif">Kekaisaran Romawi (Cinzel)</option>
-                        <option value="'Dancing Script', cursive">Tegak Bersambung (Dancing)</option>
-                        <option value="'Caveat', cursive">Tulisan Tangan Casual (Caveat)</option>
-                        <option value="'Sacramento', cursive">Minimalis Estetik (Sacramento)</option>
-                        <option value="'Parisienne', cursive">Vintage Prancis (Parisienne)</option>
-                        <option value="'Cormorant Garamond', serif">Eksklusif Puisi (Cormorant)</option>
-                        <option value="'Montserrat', sans-serif">Modern Clean (Montserrat)</option>
-                        <option value="'Poppins', sans-serif">Universal (Poppins)</option>
-                    </select>
-                </div>
-
-                <!-- 10 PILIHAN TEMA & MOTIF -->
-                <div class="form-group">
-                    <label>Pilih Tema Tampilan</label>
-                    <div class="theme-selector">
-                        <button class="theme-btn active" data-theme="theme-1">Midnight Gold</button>
-                        <button class="theme-btn" data-theme="theme-2">Blush Rose</button>
-                        <button class="theme-btn" data-theme="theme-3">Emerald Sage</button>
-                        <button class="theme-btn" data-theme="theme-4">Ivory Luxury</button>
-                        <button class="theme-btn" data-theme="theme-5">Neon Cyber</button>
-                        <button class="theme-btn" data-theme="theme-6">Warm Sunset</button>
-                        <button class="theme-btn" data-theme="theme-7">Nordic Wood</button>
-                        <button class="theme-btn" data-theme="theme-8">Amethyst Magic</button>
-                        <button class="theme-btn" data-theme="theme-9">Polkadot Retro</button>
-                        <button class="theme-btn" data-theme="theme-10">Garis Seni</button>
-                    </div>
-                </div>
-
-                <!-- ACTION BUTTONS -->
-                <div class="button-group">
-                    <button id="downloadBtn" class="download-btn">Simpan Gambar</button>
-                    <button id="shareBtn" class="share-btn">Kirim Langsung 📲</button>
-                </div>
-            </section>
-
-            <!-- AREA KANAN: PREVIEW KARTU MEWAH -->
-            <section class="preview-panel">
-                <div id="cardCanvas" class="card-canvas theme-1">
-                    <div class="card-content">
-                        <p class="card-to">Untuk: <span id="cardToText">Kak Shinta</span></p>
-                        <p class="card-message" id="cardMessageText">Selamat Ulang Tahun! Semoga langkahmu ke depan selalu dipenuhi kebahagiaan, kesehatan, dan kedamaian. Terima kasih sudah menjadi sosok yang luar biasa selama ini.</p>
-                        <p class="card-from">Salam hangat, <span id="cardFromText">Adun</span></p>
-                    </div>
-                </div>
-            </section>
-        </main>
+    <div id="landingScreen" class="page-screen">
+        <div class="hero-container">
+            <div class="hero-logo">Atelier Card</div>
+            <h1 class="hero-title">Sampaikan Perasaanmu <br>Lewat Estetika</h1>
+            <p class="hero-subtitle">Bikin kartu ucapan personal dengan desain minimalis, mewah, dan tipografi eksklusif tanpa ribet.</p>
+            <button id="startBtn" class="cta-button">Mulai Desain Kartu ✦</button>
+        </div>
     </div>
 
-    <!-- Script Renderer -->
+    <div id="appScreen" class="page-screen hidden">
+        <div class="container">
+            <header class="app-header">
+                <button id="backBtn" class="back-btn">← Kembali</button>
+                <div class="app-branding">Atelier Studio</div>
+            </header>
+
+            <main class="app-grid">
+                <section class="controls-panel">
+                    <div class="form-group">
+                        <label>Penerima</label>
+                        <input type="text" id="toInput" placeholder="Nama penerima..." value="Kak Shinta">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Pesan Ucapan</label>
+                        <textarea id="messageInput" rows="5" placeholder="Tulis pesan penuh makna di sini...">Selamat Ulang Tahun! Semoga langkahmu ke depan selalu dipenuhi kebahagiaan, kesehatan, dan kedamaian. Terima kasih sudah menjadi sosok yang luar biasa selama ini.</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Pengirim</label>
+                        <input type="text" id="fromInput" placeholder="Nama pengirim..." value="Adun">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gaya Tulisan (Font)</label>
+                        <select id="fontSelector">
+                            <option value="'Playfair Display', serif">Elegan Klasik (Playfair)</option>
+                            <option value="'Great Vibes', cursive">Kemewahan Royal (Great Vibes)</option>
+                            <option value="'Cinzel', serif">Kekaisaran Romawi (Cinzel)</option>
+                            <option value="'Dancing Script', cursive">Tegak Bersambung (Dancing)</option>
+                            <option value="'Caveat', cursive">Tulisan Tangan Casual (Caveat)</option>
+                            <option value="'Sacramento', cursive">Minimalis Estetik (Sacramento)</option>
+                            <option value="'Parisienne', cursive">Vintage Prancis (Parisienne)</option>
+                            <option value="'Cormorant Garamond', serif">Eksklusif Puisi (Cormorant)</option>
+                            <option value="'Montserrat', sans-serif">Modern Clean (Montserrat)</option>
+                            <option value="'Poppins', sans-serif">Universal (Poppins)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Pilih Tema Tampilan</label>
+                        <div class="theme-selector">
+                            <button class="theme-btn active" data-theme="theme-1">Midnight Gold</button>
+                            <button class="theme-btn" data-theme="theme-2">Blush Rose</button>
+                            <button class="theme-btn" data-theme="theme-3">Emerald Sage</button>
+                            <button class="theme-btn" data-theme="theme-4">Ivory Luxury</button>
+                            <button class="theme-btn" data-theme="theme-5">Neon Cyber</button>
+                            <button class="theme-btn" data-theme="theme-6">Warm Sunset</button>
+                            <button class="theme-btn" data-theme="theme-7">Nordic Wood</button>
+                            <button class="theme-btn" data-theme="theme-8">Amethyst Magic</button>
+                            <button class="theme-btn" data-theme="theme-9">Polkadot Retro</button>
+                            <button class="theme-btn" data-theme="theme-10">Garis Seni</button>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="downloadBtn" class="download-btn">Simpan Gambar</button>
+                        <button id="shareBtn" class="share-btn">Kirim Langsung 📲</button>
+                    </div>
+                </section>
+
+                <section class="preview-panel">
+                    <div id="cardCanvas" class="card-canvas theme-1">
+                        <div class="card-content">
+                            <p class="card-to">Untuk: <span id="cardToText">Kak Shinta</span></p>
+                            <p class="card-message" id="cardMessageText">Selamat Ulang Tahun! Semoga langkahmu ke depan selalu dipenuhi kebahagiaan, kesehatan, dan kedamaian. Terima kasih sudah menjadi sosok yang luar biasa selama ini.</p>
+                            <p class="card-from">Salam hangat, <span id="cardFromText">Adun</span></p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
