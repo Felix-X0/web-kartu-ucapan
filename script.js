@@ -1,6 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // Ambil Elemen DOM
+    // ELEMEN NAVIGASI HALAMAN (2 HALAMAN SYSTEM)
+    const landingScreen = document.getElementById('landingScreen');
+    const appScreen = document.getElementById('appScreen');
+    const startBtn = document.getElementById('startBtn');
+    const backBtn = document.getElementById('backBtn');
+
+    // Klik tombol Mulai -> Pindah ke Studio Editor
+    startBtn.addEventListener('click', () => {
+        landingScreen.classList.add('hidden');
+        appScreen.classList.remove('hidden');
+        window.scrollTo(0, 0); // Biar halaman langsung fokus ke atas
+    });
+
+    // Klik tombol Kembali -> Pulang ke Landing Page
+    backBtn.addEventListener('click', () => {
+        appScreen.classList.add('hidden');
+        landingScreen.classList.remove('hidden');
+    });
+
+    // ELEMEN INPUT & CANVAS STUDIO
     const toInput = document.getElementById('toInput');
     const messageInput = document.getElementById('messageInput');
     const fromInput = document.getElementById('fromInput');
@@ -15,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const downloadBtn = document.getElementById('downloadBtn');
     const shareBtn = document.getElementById('shareBtn');
 
-    // Set font bawaan saat pertama kali dimuat
+    // Terapkan font awal bawaan selector
     cardMessageText.style.fontFamily = fontSelector.value;
 
     // Sinkronisasi teks real-time
@@ -29,12 +48,12 @@ document.addEventListener('DOMContentLoaded', () => {
     messageInput.addEventListener('input', updatePreview);
     fromInput.addEventListener('input', updatePreview);
 
-    // Fitur Ganti Font Langsung via Inline Style (Solusi agar Terbaca Pas Download)
+    // Ganti Font Langsung via Inline Style agar terbaca pas di-download
     fontSelector.addEventListener('change', (e) => {
         cardMessageText.style.fontFamily = e.target.value;
     });
 
-    // Fitur Ganti Tema
+    // Ganti Tema Warna & Motif
     themeBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelector('.theme-btn.active').classList.remove('active');
@@ -44,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Fitur Download Gambar (Ditingkatkan ke Skala 3x agar Super HD)
+    // Download Gambar Premium (HD Skala 3x)
     downloadBtn.addEventListener('click', () => {
         downloadBtn.textContent = 'Menyimpan...';
         downloadBtn.disabled = true;
@@ -52,8 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         html2canvas(cardCanvas, { 
             scale: 3, 
             useCORS: true, 
-            logging: false,
-            allowTaint: false
+            logging: false
         }).then(canvas => {
             const image = canvas.toDataURL("image/png");
             const link = document.createElement('a');
@@ -63,14 +81,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             downloadBtn.textContent = 'Simpan Gambar';
             downloadBtn.disabled = false;
-        }).catch((err) => {
-            console.error(err);
+        }).catch(() => {
             downloadBtn.textContent = 'Gagal';
             downloadBtn.disabled = false;
         });
     });
 
-    // Fitur Share Otomatis
+    // Kirim Langsung (Share API)
     shareBtn.addEventListener('click', () => {
         shareBtn.textContent = 'Menyiapkan...';
         shareBtn.disabled = true;
@@ -95,6 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Jalankan sinkronisasi awal
+    // Jalankan preview teks bawaan saat pertama buka
     updatePreview();
 });
