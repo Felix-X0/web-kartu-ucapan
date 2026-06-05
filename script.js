@@ -1,25 +1,38 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // ELEMEN NAVIGASI HALAMAN (2 HALAMAN SYSTEM)
+    // NAVIGATION SCREEN EVENT
     const landingScreen = document.getElementById('landingScreen');
     const appScreen = document.getElementById('appScreen');
     const startBtn = document.getElementById('startBtn');
     const backBtn = document.getElementById('backBtn');
 
-    // Klik tombol Mulai -> Pindah ke Studio Editor
     startBtn.addEventListener('click', () => {
         landingScreen.classList.add('hidden');
         appScreen.classList.remove('hidden');
-        window.scrollTo(0, 0); // Biar halaman langsung fokus ke atas
+        window.scrollTo(0, 0);
     });
 
-    // Klik tombol Kembali -> Pulang ke Landing Page
     backBtn.addEventListener('click', () => {
         appScreen.classList.add('hidden');
         landingScreen.classList.remove('hidden');
     });
 
-    // ELEMEN INPUT & CANVAS STUDIO
+    // MOBILE TABS CORE SYSTEM
+    const tabLinks = document.querySelectorAll('.tab-link');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            tabLinks.forEach(l => l.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+            
+            link.classList.add('active');
+            const targetedTab = link.getAttribute('data-tab');
+            document.getElementById(targetedTab).classList.add('active');
+        });
+    });
+
+    // EDITOR ENGINE DOM
     const toInput = document.getElementById('toInput');
     const messageInput = document.getElementById('messageInput');
     const fromInput = document.getElementById('fromInput');
@@ -33,39 +46,95 @@ document.addEventListener('DOMContentLoaded', () => {
     const fontSelector = document.getElementById('fontSelector');
     const downloadBtn = document.getElementById('downloadBtn');
     const shareBtn = document.getElementById('shareBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    
+    const fontSizeSlider = document.getElementById('fontSizeSlider');
+    const fontSizeVal = document.getElementById('fontSizeVal');
+    const ratioBtns = document.querySelectorAll('.ratio-btn');
+    const customColorBg = document.getElementById('customColorBg');
 
-    // Terapkan font awal bawaan selector
+    // Terapkan konfigurasi awal
     cardMessageText.style.fontFamily = fontSelector.value;
+    cardMessageText.style.fontSize = fontSizeSlider.value + "px";
 
-    // Sinkronisasi teks real-time
+    // Fungsi Sinkronisasi Teks Real-time
     function updatePreview() {
-        cardToText.textContent = toInput.value || "[Nama]";
-        cardMessageText.textContent = messageInput.value || "[Isi Ucapan]";
-        cardFromText.textContent = fromInput.value || "[Nama]";
+        cardToText.textContent = toInput.value || "";
+        cardMessageText.textContent = messageInput.value || "";
+        cardFromText.textContent = fromInput.value || "";
     }
 
     toInput.addEventListener('input', updatePreview);
     messageInput.addEventListener('input', updatePreview);
     fromInput.addEventListener('input', updatePreview);
 
-    // Ganti Font Langsung via Inline Style agar terbaca pas di-download
+    // FITUR BARU 1: SLIDER UKURAN FONT DINAMIS
+    fontSizeSlider.addEventListener('input', (e) => {
+        const size = e.target.value + "px";
+        fontSizeVal.textContent = size;
+        cardMessageText.style.fontSize = size;
+    });
+
+    // FITUR BARU 2: GANTI FORMAT RASIO KARTU (1:1, 4:5, 9:16)
+    ratioBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelector('.ratio-btn.active').classList.remove('active');
+            btn.classList.add('active');
+            
+            const ratioType = btn.getAttribute('data-ratio');
+            cardCanvas.classList.remove('ratio-45', 'ratio-11', 'ratio-916');
+            
+            if(ratioType === 'ratio-11') cardCanvas.classList.add('ratio-11');
+            if(ratioType === 'ratio-916') cardCanvas.classList.add('ratio-916');
+        });
+    });
+
+    // FITUR BARU 3: CUSTOM COLOR PICKER BACKGROUND
+    customColorBg.addEventListener('input', (e) => {
+        // Matikan tema template kalau user pakai warna kustom
+        cardCanvas.className = "card-canvas"; 
+        cardCanvas.style.background = e.target.value;
+        cardCanvas.style.color = "#ffffff"; // default teks putih biar kontras
+    });
+
+    // FITUR BARU 4: TOMBOL RESET (CLEAR ALL TEXT)
+    clearBtn.addEventListener('click', () => {
+        if(confirm("Apakah kamu ingin mengosongkan semua tulisan kartu?")) {
+            toInput.value = "";
+            messageInput.value = "";
+            fromInput.value = "";
+            updatePreview();
+        }
+    });
+
+    // Fitur Ganti Font
     fontSelector.addEventListener('change', (e) => {
         cardMessageText.style.fontFamily = e.target.value;
     });
 
-    // Ganti Tema Warna & Motif
+    // Fitur Ganti Tema Preset
     themeBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelector('.theme-btn.active').classList.remove('active');
             btn.classList.add('active');
+            
+            // Reset background kustom inline jika ada
+            cardCanvas.style.background = "";
+            cardCanvas.style.color = "";
+            
             const selectedTheme = btn.getAttribute('data-theme');
             cardCanvas.className = `card-canvas ${selectedTheme}`;
+            
+            // Sinkronkan ulang status rasio aktif saat ini
+            const currentRatio = document.querySelector('.ratio-btn.active').getAttribute('data-ratio');
+            if(currentRatio === 'ratio-11') cardCanvas.classList.add('ratio-11');
+            if(currentRatio === 'ratio-916') cardCanvas.classList.add('ratio-916');
         });
     });
 
-    // Download Gambar Premium (HD Skala 3x)
+    // Fitur Download Gambar Ultra HD Skala 3x
     downloadBtn.addEventListener('click', () => {
-        downloadBtn.textContent = 'Menyimpan...';
+        downloadBtn.textContent = 'PROSES...';
         downloadBtn.disabled = true;
 
         html2canvas(cardCanvas, { 
@@ -79,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
             link.href = image;
             link.click();
 
-            downloadBtn.textContent = 'Simpan Gambar';
+            downloadBtn.textContent = 'Simpan Gambar 高画質';
             downloadBtn.disabled = false;
         }).catch(() => {
             downloadBtn.textContent = 'Gagal';
@@ -87,9 +156,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Kirim Langsung (Share API)
+    // Fitur Share API WhatsApp Langsung
     shareBtn.addEventListener('click', () => {
-        shareBtn.textContent = 'Menyiapkan...';
+        shareBtn.textContent = 'MENYIAPKAN...';
         shareBtn.disabled = true;
 
         html2canvas(cardCanvas, { scale: 3, useCORS: true, logging: false }).then(canvas => {
@@ -98,12 +167,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                     navigator.share({
-                        title: 'Kartu Ucapan Premium',
-                        text: 'Ada kartu ucapan spesial yang dibuat khusus untukmu.',
+                        title: 'Atelier Greeting Card',
+                        text: 'Ada sebuah kartu ucapan digital eksklusif dirancang khusus untukmu.',
                         files: [file]
                     }).catch(err => console.log('Batal berbagi:', err));
                 } else {
-                    alert('Sistem perangkatmu tidak mendukung fitur kirim otomatis. Silakan gunakan tombol Simpan Gambar saja ya!');
+                    alert('Sistem perangkatmu tidak mendukung pengiriman file instan otomatis. Silakan gunakan tombol Simpan Gambar saja ya!');
                 }
 
                 shareBtn.textContent = 'Kirim Langsung 📲';
@@ -112,6 +181,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Jalankan preview teks bawaan saat pertama buka
+    // Inisialisasi awal teks bawaan
     updatePreview();
 });
