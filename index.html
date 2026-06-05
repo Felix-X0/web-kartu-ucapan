@@ -3,41 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atelier Card Studio</title>
+    <title>Atelier AI Studio | Master Edition</title>
+    <!-- GOOGLE VERIFICATION (TERPASANG) -->
     <meta name="google-site-verification" content="eikd6Rzc695Y7uJtpPKJFB6zgb-V08adih6jovwYE6M" />
-    <link rel="stylesheet" href="style.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&family=Playfair+Display&family=Poppins&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        :root { --bg: #131314; --surface: #1e1f20; --text: #e3e3e3; --accent: #a8c7fa; }
+        * { box-sizing: border-box; font-family: 'Google Sans', sans-serif; }
+        body { background: var(--bg); color: var(--text); margin: 0; display: flex; justify-content: center; min-height: 100vh; }
+
+        /* UI LAYOUT */
+        .app-container { width: 100%; max-width: 500px; padding: 20px; }
+        .chat-bubble { background: var(--surface); padding: 20px; border-radius: 20px; margin-bottom: 15px; animation: fadeIn 0.5s; }
+        
+        /* CARD STYLES */
+        #cardCanvas { width: 100%; aspect-ratio: 4/5; border-radius: 25px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px; transition: 0.8s; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .theme-luxury { background: #0a0a0a; border: 2px solid #c5a059; color: #c5a059; }
+        .theme-cyber { background: #050505; border: 2px solid #00ffcc; color: #00ffcc; animation: pulse 2s infinite; }
+        .theme-anime { background: #fff; border: 4px solid #000; color: #000; }
+        .theme-floral { background: #fff0f5; border: 2px solid #ff80ab; color: #5d4037; }
+        .theme-kartun { background: #ffe066; border: 3px solid #4a90e2; color: #2b2b2b; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
+        @keyframes pulse { 0% { box-shadow: 0 0 10px #00ffcc; } 50% { box-shadow: 0 0 30px #ff00ff; } }
+
+        /* INPUTS */
+        .prompt-area { background: var(--surface); padding: 15px; border-radius: 30px; margin-top: 20px; }
+        input, textarea, select { width: 100%; background: transparent; border: none; color: white; padding: 10px; outline: none; }
+        button { background: var(--accent); color: black; border: none; padding: 12px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-top: 5px; }
+    </style>
 </head>
 <body>
 
-    <div id="landingScreen" class="page-screen">
-        <div class="hero-card">
-            <h1>Atelier Card Studio</h1>
-            <p>Karya seni kartu ucapan digital.</p>
-            <button id="startBtn" class="cta-button">Mulai Mendesain</button>
-        </div>
+<div class="app-container" id="chat-flow">
+    <!-- GREETING -->
+    <div class="chat-bubble" id="welcome">
+        Halo! Saya Atelier AI. Saya siap membantu membuatkan kartu ucapan yang sangat estetis untukmu. Siap untuk memulai?
+        <br><br><button onclick="startApp()">Mulai Buat Kartu</button>
     </div>
 
-    <div id="appScreen" class="page-screen hidden">
-        <div class="studio-container">
-            <header>
-                <button id="backBtn">← Beranda</button>
-            </header>
-            
-            <section id="cardCanvas" class="card-container theme-luxury">
-                <p id="cardToText">Untuk: Kak Shinta</p>
-                <p id="cardMessageText">Selamat Ulang Tahun!</p>
-                <p id="cardFromText">Dari: Adun</p>
-            </section>
+    <!-- EDITOR (HIDDEN AT FIRST) -->
+    <div id="editor" style="display:none;">
+        <div id="cardCanvas" class="theme-luxury">
+            <p id="cardTo" style="font-size: 1.1em;">Untuk: ...</p>
+            <h1 id="cardMsg" style="font-size: 2em; margin: 20px 0;">...</h1>
+            <p id="cardFrom" style="font-style: italic;">Dari: ...</p>
+        </div>
 
-            <div class="controls">
-                <input type="text" id="toInput" placeholder="Nama Penerima" value="Kak Shinta">
-                <textarea id="messageInput" rows="3">Selamat Ulang Tahun!</textarea>
-                <input type="text" id="fromInput" placeholder="Nama Pengirim" value="Adun">
-                <button id="shareBtn">Salin Tautan</button>
-            </div>
+        <div class="prompt-area">
+            <input type="text" id="toIn" placeholder="Penerima..." oninput="update()">
+            <textarea id="msgIn" placeholder="Pesan..." oninput="update()"></textarea>
+            <input type="text" id="fromIn" placeholder="Pengirim..." oninput="update()">
+            <select id="themeSel" onchange="update()">
+                <option value="theme-luxury">Luxury Gold</option>
+                <option value="theme-cyber">Cyber Neon</option>
+                <option value="theme-floral">Floral Soft</option>
+                <option value="theme-anime">Anime Style</option>
+                <option value="theme-kartun">Cartoon Fun</option>
+            </select>
+            <button onclick="download4K()">Simpan 4K HD</button>
+            <button onclick="shareLink()" style="background:#555; color:white;">Salin Link</button>
         </div>
     </div>
+</div>
 
-    <script src="script.js"></script>
+<script>
+    function startApp() {
+        document.getElementById('welcome').style.display = 'none';
+        document.getElementById('editor').style.display = 'block';
+    }
+
+    function update() {
+        document.getElementById('cardTo').textContent = "Untuk: " + (document.getElementById('toIn').value || "...");
+        document.getElementById('cardMsg').textContent = document.getElementById('msgIn').value || "...";
+        document.getElementById('cardFrom').textContent = "Dari: " + (document.getElementById('fromIn').value || "...");
+        document.getElementById('cardCanvas').className = document.getElementById('themeSel').value;
+    }
+
+    function download4K() {
+        html2canvas(document.getElementById('cardCanvas'), { scale: 4 }).then(c => {
+            const link = document.createElement('a');
+            link.download = 'Atelier-Masterpiece.png';
+            link.href = c.toDataURL('image/png', 1.0);
+            link.click();
+        });
+    }
+
+    function shareLink() {
+        const d = btoa(JSON.stringify({t:document.getElementById('toIn').value, m:document.getElementById('msgIn').value, f:document.getElementById('fromIn').value, th:document.getElementById('themeSel').value}));
+        navigator.clipboard.writeText(window.location.origin + window.location.pathname + "?data=" + d);
+        alert("Link unik disalin!");
+    }
+
+    window.onload = () => {
+        const p = new URLSearchParams(window.location.search);
+        if (p.has('data')) {
+            const d = JSON.parse(atob(p.get('data')));
+            document.getElementById('toIn').value = d.t; document.getElementById('msgIn').value = d.m; document.getElementById('fromIn').value = d.f; document.getElementById('themeSel').value = d.th;
+            startApp();
+            update();
+        }
+    };
+</script>
 </body>
 </html>
