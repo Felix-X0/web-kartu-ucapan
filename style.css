@@ -28,7 +28,7 @@ body {
     filter: blur(60px);
 }
 
-/* HALAMAN 1: LANDING PAGE */
+/* LANDING PAGE */
 .page-screen {
     min-height: 100vh;
     display: flex;
@@ -93,6 +93,8 @@ body {
     cursor: pointer;
     box-shadow: 0 10px 20px rgba(180, 138, 52, 0.2);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    display: inline-block;
 }
 
 .cta-button:hover {
@@ -100,7 +102,7 @@ body {
     box-shadow: 0 15px 25px rgba(180, 138, 52, 0.3);
 }
 
-/* APP STUDIO SYSTEM */
+/* APP STUDIO CONTAINER */
 .studio-container {
     width: 100%;
     max-width: 1280px;
@@ -143,7 +145,7 @@ body {
     color: #dfba6b;
 }
 
-/* BENTO STUDIO GRID */
+/* GRID BENTO SYSTEM */
 .studio-grid {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
@@ -151,7 +153,6 @@ body {
     align-items: start;
 }
 
-/* PREVIEW CANVAS PANEL */
 .preview-panel {
     display: flex;
     justify-content: center;
@@ -160,6 +161,7 @@ body {
     top: 24px;
 }
 
+/* THE CARD CANVAS */
 .card-canvas {
     width: 100%;
     max-width: 420px;
@@ -175,7 +177,6 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Ratios */
 .ratio-45 { aspect-ratio: 4 / 5; }
 .ratio-11 { aspect-ratio: 1 / 1; }
 .ratio-916 { aspect-ratio: 9 / 16; }
@@ -192,10 +193,9 @@ body {
 
 .card-to { font-size: 16px; letter-spacing: 1px; margin-bottom: 20px; font-weight: 300; }
 .card-to span { font-weight: 600; }
-.card-message { font-size: 24px; line-height: 1.6; font-weight: 400; flex-grow: 1; display: flex; align-items: center; justify-content: center; }
+.card-message { font-size: 24px; line-height: 1.6; font-weight: 400; flex-grow: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; word-break: break-word; }
 .card-from { font-size: 15px; margin-top: 20px; font-style: italic; opacity: 0.8; }
 
-/* LAYERS EFEK & FILTER */
 .card-overlay {
     position: absolute;
     inset: 0;
@@ -204,9 +204,9 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Efek Atmosferik */
+/* ATMOSPHERIC FX BUILDERS */
 .fx-grain {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.06'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
 }
 .fx-snow {
     background: radial-gradient(circle at 20% 20%, #fff 1px, transparent 2px),
@@ -214,7 +214,7 @@ body {
                 radial-gradient(circle at 40% 70%, #fff 1px, transparent 2px),
                 radial-gradient(circle at 85% 85%, #fff 2px, transparent 3.5px);
     background-size: 200px 200px;
-    opacity: 0.4;
+    opacity: 0.45;
 }
 .fx-bokeh {
     background: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.08) 0%, transparent 30%),
@@ -222,12 +222,12 @@ body {
                 radial-gradient(circle at 50% 40%, rgba(255,255,255,0.05) 0%, transparent 20%);
 }
 
-/* Filter Lighting */
+/* CINEMATIC LIGHTING FILTERS */
 .ft-highcontrast { filter: contrast(1.35) brightness(0.85) saturate(1.1); }
 .ft-vintage { filter: sepia(0.25) contrast(1.05) saturate(0.9); }
 .ft-cyber { filter: hue-rotate(45deg) contrast(1.2) saturate(1.4); }
 
-/* PALET TEMA WARNA BAWAAN */
+/* COLOR PALETTES */
 .theme-1 { background: #1e293b; color: #dfba6b; border: 2px solid #dfba6b; }
 .theme-2 { background: #fbcfe8; color: #4c1d95; }
 .theme-3 { background: #064e3b; color: #fef08a; }
@@ -237,7 +237,7 @@ body {
 .theme-7 { background: #2b1810; color: #f5e0c3; }
 .theme-8 { background: #4c1d95; color: #a5f3fc; }
 
-/* CONTROLS PANEL (BENTO THEME) */
+/* CONTROLS AREA */
 .controls-panel { display: flex; flex-direction: column; gap: 20px; }
 .mobile-tabs { display: flex; gap: 10px; background: rgba(15,23,42,0.6); padding: 6px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
 .tab-link { flex: 1; background: transparent; border: none; color: #94a3b8; padding: 12px; font-weight: 600; font-size: 14px; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
@@ -245,70 +245,189 @@ body {
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-.bento-box {
-    background: rgba(15, 23, 42, 0.45);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 20px;
-    padding: 24px;
-    backdrop-filter: blur(12px);
-}
-
+.bento-box { background: rgba(15, 23, 42, 0.45); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 20px; padding: 24px; backdrop-filter: blur(12px); }
 .form-group { margin-bottom: 20px; }
-.form-group:last-child { margin-bottom: 0; }
-.form-group label { display: block; font-size: 13px; font-weight: 600; color: #94a3b8; margin-bottom: 8px; letter-spacing: 0.5px; }
+.form-group label { display: block; font-size: 13px; font-weight: 600; color: #94a3b8; margin-bottom: 8px; }
 
-input[type="text"], textarea, .custom-select {
-    width: 100%;
-    background: rgba(2, 6, 23, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    padding: 12px 16px;
-    color: #fff;
-    font-size: 14px;
-    outline: none;
-    transition: all 0.2s;
-}
-input[type="text"]:focus, textarea:focus, .custom-select:focus { border-color: #dfba6b; background: rgba(2, 6, 23, 0.8); }
+input[type="text"], textarea, .custom-select { width: 100%; background: rgba(2, 6, 23, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px 16px; color: #fff; font-size: 14px; outline: none; }
+input[type="text"]:focus, textarea:focus, .custom-select:focus { border-color: #dfba6b; }
 
-/* SLIDER & BUTTONS SELECTOR */
 .label-with-value { display: flex; justify-content: space-between; align-items: center; }
 #fontSizeVal { font-size: 13px; color: #dfba6b; font-weight: 600; }
 .modern-slider { -webkit-appearance: none; width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 5px; outline: none; margin-top: 10px; }
-.modern-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: #dfba6b; border-radius: 50%; cursor: pointer; transition: transform 0.1s; }
-.modern-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+.modern-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: #dfba6b; border-radius: 50%; cursor: pointer; }
 
 .ratio-selector { display: flex; gap: 8px; }
 .ratio-btn { flex: 1; background: rgba(2,6,23,0.5); border: 1px solid rgba(255,255,255,0.08); color: #94a3b8; padding: 10px; font-size: 12px; border-radius: 8px; cursor: pointer; font-weight: 600; }
 .ratio-btn.active { background: #dfba6b; color: #020617; border-color: #dfba6b; }
 
 .theme-selector { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-.theme-btn { width: 36px; height: 36px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s; }
+.theme-btn { width: 36px; height: 36px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; }
 .theme-btn.active { transform: scale(1.15); border-color: #fff; }
 
 .color-picker-group { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 16px; margin-top: 16px; }
 .color-picker-wrapper { display: flex; align-items: center; gap: 12px; }
 input[type="color"] { -webkit-appearance: none; border: none; width: 34px; height: 34px; border-radius: 8px; cursor: pointer; background: transparent; }
-input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
 input[type="color"]::-webkit-color-swatch { border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; }
-.color-picker-wrapper span { font-size: 13px; color: #94a3b8; }
 
-/* ACTION BUTTONS */
 .action-bento { display: flex; gap: 14px; }
 .premium-btn { flex: 1; padding: 16px; border-radius: 14px; font-size: 15px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
 .premium-btn.primary { background: #fff; color: #020617; }
-.premium-btn.primary:hover { background: #f1f5f9; transform: translateY(-1px); }
 .premium-btn.secondary { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.1); }
-.premium-btn.secondary:hover { background: rgba(255,255,255,0.15); }
 
-/* MONETIZATION BOX */
 .donation-box { padding: 16px 24px; background: rgba(223, 186, 107, 0.03); border: 1px solid rgba(223, 186, 107, 0.1); }
-.donation-content { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #cbd5e1; }
-.donation-btn { color: #dfba6b; font-weight: 600; text-decoration: none; border-bottom: 1px dashed #dfba6b; padding-bottom: 2px; }
+.donation-content { display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+.donation-btn { color: #dfba6b; font-weight: 600; text-decoration: none; border-bottom: 1px dashed #dfba6b; }
 
-/* RESPONSIVE LAYOUT (MOBILE OPTIMIZED) */
+/* BARU ✉️ RECIPIENT SCREEN & LUXURY ENVELOPE STYLES */
+.recipient-container {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px; /* Sensasi kedalaman 3D */
+    padding: 20px;
+}
+
+/* Desain Kotak Amplop Eksklusif */
+.envelope-wrapper {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    background: #090d16;
+    border: 2px solid #dfba6b;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 40px rgba(223,186,107,0.05);
+    padding: 30px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+}
+
+.envelope-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Segel Wax Lilin Premium */
+.envelope-seal {
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at 35% 35%, #fef08a 0%, #b48a34 60%, #785306 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #020617;
+    font-size: 24px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.4), 0 0 20px rgba(223,186,107,0.3);
+    margin-bottom: 24px;
+    animation: sealPulse 2s infinite alternate;
+}
+
+@keyframes sealPulse {
+    0% { transform: scale(1); box-shadow: 0 6px 15px rgba(0,0,0,0.4), 0 0 10px rgba(223,186,107,0.2); }
+    100% { transform: scale(1.05); box-shadow: 0 6px 20px rgba(0,0,0,0.5), 0 0 25px rgba(223,186,107,0.5); }
+}
+
+.envelope-title {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: #dfba6b;
+}
+
+.envelope-divider {
+    width: 50px;
+    height: 1px;
+    background: #dfba6b;
+    margin: 16px 0;
+    opacity: 0.5;
+}
+
+.envelope-sub {
+    font-size: 13px;
+    color: #94a3b8;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+}
+
+.envelope-to-label {
+    font-size: 15px;
+    color: #cbd5e1;
+    margin-bottom: 30px;
+}
+
+.envelope-to-label span {
+    font-weight: 600;
+    color: #fff;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 2px;
+}
+
+.open-envelope-btn {
+    background: transparent;
+    border: 1px solid #dfba6b;
+    color: #dfba6b;
+    padding: 12px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.open-envelope-btn:hover {
+    background: #dfba6b;
+    color: #020617;
+    box-shadow: 0 0 15px rgba(223,186,107,0.4);
+}
+
+/* Animasi Ketika Amplop Dibuka */
+.envelope-wrapper.opened {
+    transform: translateY(-100px) scale(0.85) rotateX(20deg);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Hasil Penampilan Kartu Akhir */
+.recipient-card-container {
+    width: 100%;
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.recipient-card-container.hidden-card {
+    opacity: 0;
+    transform: translateY(100px) scale(0.9);
+    pointer-events: none;
+    position: absolute;
+}
+
+/* CTA Tombol Pembuat */
+.recipient-cta {
+    margin-top: 30px;
+    transition: opacity 0.5s ease 0.4s;
+    text-align: center;
+}
+
+.recipient-cta.hidden-cta {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* MOBILE RESPONSIVE OPTIMIZATION */
 @media (max-width: 768px) {
     .studio-grid { grid-template-columns: 1fr; gap: 16px; }
     .preview-panel { position: relative; top: 0; z-index: 10; margin-bottom: 10px; }
-    .card-canvas { max-width: 100%; height: auto; }
+    .card-canvas { max-width: 100%; }
     .hero-title { font-size: 30px; }
 }
