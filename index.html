@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembuat Kartu Ucapan Estetik</title>
+    <!-- Kita pakai font estetik dari Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    
+    <!-- Link ke file CSS kita nanti -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Pembuat Kartu Ucapan Digital</h1>
+            <p>Bikin ucapan estetik dalam 10 detik. Tanpa login, tanpa ribet.</p>
+        </header>
+
+        <main class="app-grid">
+            <!-- AREA KIRI: FORM INPUT -->
+            <section class="controls-panel">
+                <div class="form-group">
+                    <label>Untuk Siapa?</label>
+                    <input type="text" id="toInput" placeholder="Contoh: Kak Shinta" value="Kak Shinta">
+                </div>
+                
+                <div class="form-group">
+                    <label>Tulis Pesanmu</label>
+                    <textarea id="messageInput" rows="4" placeholder="Tulis ucapan kamu di sini...">Selamat Ulang Tahun yang ke-25! Semoga makin sukses, sehat selalu, dan semua impianmu tercapai. Bahagia terus ya!</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Dari Siapa?</label>
+                    <input type="text" id="fromInput" placeholder="Contoh: Adun" value="Adun">
+                </div>
+
+                <div class="form-group">
+                    <label>Pilih Tema</label>
+                    <div class="theme-selector">
+                        <button class="theme-btn active" data-theme="theme-1">Midnight Blue</button>
+                        <button class="theme-btn" data-theme="theme-2">Romantic Pink</button>
+                        <button class="theme-btn" data-theme="theme-3">Forest Green</button>
+                    </div>
+                </div>
+
+                <button id="downloadBtn" class="download-btn">Download sebagai Gambar (PNG)</button>
+            </section>
+
+            <!-- AREA KANAN: PREVIEW KARTU (INI YANG AKAN JADI GAMBAR) -->
+            <section class="preview-panel">
+                <div id="cardCanvas" class="card-canvas theme-1">
+                    <div class="card-content">
+                        <p class="card-to">Dear, <span id="cardToText">Kak Shinta</span></p>
+                        <p class="card-message" id="cardMessageText">Selamat Ulang Tahun yang ke-25! Semoga makin sukses, sehat selalu, dan semua impianmu tercapai. Bahagia terus ya!</p>
+                        <p class="card-from">From: <span id="cardFromText">Adun</span></p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Trik Ajaib: Library kecil buat ngubah HTML jadi Gambar PNG -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <!-- Link ke file JavaScript kita nanti -->
+    <script src="script.js"></script>
+</body>
+</html>
